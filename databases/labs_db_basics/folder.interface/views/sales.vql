@@ -1,0 +1,25 @@
+﻿CREATE OR REPLACE INTERFACE VIEW sales (
+        employeeid:text,
+        productid:text,
+        customerid:text,
+        saleid:text,
+        saledate:text,
+        bundleamount:text,
+        productsaleprice:text,
+        totalprice:text
+    )
+    SET IMPLEMENTATION bv_sales_all(
+        employeeid = employeeid,
+        productid = productid,
+        customerid = customerid,
+        saleid = saleid,
+        saledate = saledate,
+        bundleamount = bundleamount,
+        productsaleprice = productsaleprice,
+        totalprice = totalprice    
+)
+    FOLDER = '/interface';
+
+ALTER VIEW sales
+ LAYOUT (bv_sales_all = [290, 10, 200, 206]);
+

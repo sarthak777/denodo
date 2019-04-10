@@ -1,0 +1,14 @@
+﻿CREATE OR REPLACE INTERFACE VIEW interaction (
+        customer_code:text,
+        agent_id:decimal,
+        interaction_date:date,
+        case_id:decimal,
+        interaction_phone:text,
+        interaction_ip:text
+    )
+    SET IMPLEMENTATION denodo_training.dv_interactions
+    FOLDER = '/interface';
+
+ALTER VIEW interaction
+ LAYOUT (dv_interactions = [470, 30, 210, 146]);
+

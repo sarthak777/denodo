@@ -1,0 +1,8 @@
+﻿CREATE OR REPLACE ASSOCIATION a_customer_interaction REFERENTIAL CONSTRAINT 
+FOLDER = '/associations'
+    ENDPOINT a_customer_interaction_source customer PRINCIPAL (1)
+    DESCRIPTION = 'a_customer_interaction_source'
+    ENDPOINT a_customer_interaction_target interaction (0,*)
+    DESCRIPTION = 'a_customer_interaction_target'
+    ADD MAPPING customer_code_internal=customer_code;
+

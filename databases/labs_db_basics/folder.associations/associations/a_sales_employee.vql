@@ -1,0 +1,8 @@
+﻿CREATE OR REPLACE ASSOCIATION a_sales_employee REFERENTIAL CONSTRAINT 
+FOLDER = '/associations'
+    ENDPOINT a_sales_employee_source employee PRINCIPAL (1)
+    DESCRIPTION = 'a_sales_employee_source'
+    ENDPOINT a_sales_employee_target sales (0,*)
+    DESCRIPTION = 'a_sales_employee_target'
+    ADD MAPPING employee_id=employeeid;
+

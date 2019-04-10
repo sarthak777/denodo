@@ -1,0 +1,4 @@
+﻿/databases/labs_db_basics/folder.associations/associations.vql
+/databases/labs_db_basics/folder.interface/interface.vql
+/databases/labs_db_basics/folder.interface/views/customer.vql
+/databases/labs_db_basics/folder.interface/views/interaction.vql

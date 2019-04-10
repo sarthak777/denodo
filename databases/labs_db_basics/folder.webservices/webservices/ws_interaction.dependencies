@@ -1,0 +1,4 @@
+﻿/databases/labs_db_basics/folder.webservices/webservices.vql
+/databases/labs_db_basics/folder.derived_views/derived_views.vql
+/databases/labs_db_basics/folder.derived_views/views/dv_product_storage.vql
+/databases/labs_db_basics/folder.derived_views/views/dv_intractions_customer.vql

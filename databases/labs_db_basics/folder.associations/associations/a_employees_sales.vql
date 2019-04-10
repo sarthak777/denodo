@@ -1,0 +1,9 @@
+﻿CREATE OR REPLACE ASSOCIATION a_employees_sales REFERENTIAL CONSTRAINT 
+FOLDER = '/associations'
+    ENDPOINT sales_data bv_hr_employees PRINCIPAL (1)
+    ENDPOINT employees bv_sales_all (0,*)
+    ADD MAPPING employee_id=employeeid;
+
+ALTER ASSOCIATION a_employees_sales
+ LAYOUT (bv_hr_employees = [500, 190, 320, 259], bv_sales_all = [970, 200, 420, 219]);
+

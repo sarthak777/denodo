@@ -1,0 +1,23 @@
+﻿CREATE OR REPLACE INTERFACE VIEW order (
+        customer_code:text,
+        product_id:decimal,
+        id:decimal,
+        status:text,
+        date_placed:date,
+        date_delivered:date,
+        date_closed:date
+    )
+    SET IMPLEMENTATION denodo_training.dv_orders(
+        customer_code = customer_code,
+        product_id = product_id,
+        id = id,
+        status = status,
+        date_placed = date_placed,
+        date_delivered = date_delivered,
+        date_closed = date_closed    
+)
+    FOLDER = '/interface';
+
+ALTER VIEW order
+ LAYOUT (dv_orders = [370, 10, 200, 186]);
+

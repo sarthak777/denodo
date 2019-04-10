@@ -1,0 +1,27 @@
+﻿CREATE OR REPLACE INTERFACE VIEW customer (
+        customer_code_internal:text,
+        id:decimal,
+        complete_name:text,
+        email:text,
+        phone:text,
+        main_address:text,
+        main_postcode:int,
+        main_country:text,
+        registered_date:date
+    )
+    SET IMPLEMENTATION denodo_training.bv_wo_customer(
+        customer_code_internal = customer_code_internal,
+        id = id,
+        complete_name = ((first_name||'   ')||last_name),
+        email = email,
+        phone = phone,
+        main_address = main_address,
+        main_postcode = cast('int', main_postcode),
+        main_country = main_country,
+        registered_date = registered_date    
+)
+    FOLDER = '/interface';
+
+ALTER VIEW customer
+ LAYOUT (bv_wo_customer = [460, 20, 270, 105]);
+

@@ -1,0 +1,4 @@
+﻿UNDEPLOY IF EXISTS WEBSERVICE ws_rest_api;
+
+DEPLOY WEBSERVICE ws_rest_api;
+

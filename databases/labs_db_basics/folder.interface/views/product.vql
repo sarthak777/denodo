@@ -1,0 +1,15 @@
+﻿CREATE OR REPLACE INTERFACE VIEW product (
+        productid:int,
+        productname:text,
+        productprice:float
+    )
+    SET IMPLEMENTATION denodo_training.bv_product(
+        productid = productid,
+        productname = productname,
+        productprice = productprice    
+)
+    FOLDER = '/interface';
+
+ALTER VIEW product
+ LAYOUT (bv_product = [320, 20, 294, 226]);
+

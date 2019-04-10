@@ -1,0 +1,8 @@
+﻿CREATE OR REPLACE ASSOCIATION a_product_order REFERENTIAL CONSTRAINT 
+FOLDER = '/associations'
+    ENDPOINT a_product_order_source product PRINCIPAL (1)
+    DESCRIPTION = 'a_product_order_source'
+    ENDPOINT a_product_order_target order (0,*)
+    DESCRIPTION = 'a_product_order_target'
+    ADD MAPPING productid=product_id;
+

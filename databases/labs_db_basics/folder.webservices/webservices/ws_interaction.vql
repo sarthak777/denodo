@@ -1,0 +1,49 @@
+﻿CREATE OR REPLACE SOAP WEBSERVICE ws_interaction
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 900000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    I18N  = au_cst
+    DATETYPEMAPPING DATE
+    NOWRAPARRAYS
+    RAISEFAULTONIDU
+    DONOTAPPLYOUTPUTXSLTTOERRORS
+    AUTHENTICATION (WSS BASIC VDP )
+    OUTPUT 
+        ( STYLE DOCUMENT
+            XSLT (
+                OPERATION = 'getInteractionByCustomer'
+                INPUTXSLT = '<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+   <xsl:output omit-xml-declaration="yes" indent="yes"/>
+   <xsl:template match="node()|@*">
+      <xsl:copy>
+        <xsl:apply-templates select="node()|@*"/>
+      </xsl:copy>
+   </xsl:template>
+   <xsl:template match="RequestID|RequestTime"/>
+</xsl:stylesheet>' ENABLED ) )
+    OPERATION 'getInteractionByCustomer' (
+        TYPE SELECT
+        SCHEMA VIEW dv_intractions_customer
+        VQL = 'SELECT intractions FROM dv_intractions_customer ^ExecuteIfIsNotNull("WHERE ",@WHEREEXPRESSION,"") CONTEXT (''i18n'' = ''au_cst''^ExecuteIfIsNotNull(", ",@VERBOSEERRORS,"")^ExecuteIfIsNotNull(", ",@CONTEXTEXPRESSION,""))'
+        INPUTS 'getInteractionByCustomer' (
+            'CUSTOMER_CODE' customer_code:'text' '=' ('/CUSTOMER_CODE'='CUSTOMER_CODE')
+        )
+        OUTPUT 
+            'DV_INTRACTIONS_CUSTOMERReturn': Array of ( 'getInteractionByCustomerRow': Register of (
+                intractions : '_array_register_agent_id_interaction_date_case_id_interaction_phone_interaction_ip'
+            ) (
+                    '/customer_code'='CUSTOMER_CODE',
+                    '/intractions'='INTRACTIONS':'_array_register_agent_id_interaction_date_case_id_interaction_phone_interaction_ip' / '_register_agent_id_interaction_date_case_id_interaction_phone_interaction_ip',
+                    '/intractions/agent_id'='AGENT_ID',
+                    '/intractions/case_id'='CASE_ID',
+                    '/intractions/interaction_date'='INTERACTION_DATE',
+                    '/intractions/interaction_ip'='INTERACTION_IP',
+                    '/intractions/interaction_phone'='INTERACTION_PHONE'))
+    )
+    FOLDER = '/webservices';
+

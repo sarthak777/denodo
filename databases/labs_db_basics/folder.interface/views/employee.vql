@@ -1,0 +1,31 @@
+﻿CREATE OR REPLACE INTERFACE VIEW employee (
+        employee_id:int,
+        first_name:text,
+        last_name:text,
+        email:text,
+        phone_number:text,
+        hire_date:date,
+        job_id:text,
+        salary:decimal,
+        commission_pct:decimal,
+        manager_id:int,
+        department_id:int
+    )
+    SET IMPLEMENTATION bv_hr_employees(
+        employee_id = cast('int', employee_id),
+        first_name = first_name,
+        last_name = last_name,
+        email = email,
+        phone_number = phone_number,
+        hire_date = cast('date', hire_date),
+        job_id = job_id,
+        salary = salary,
+        commission_pct = commission_pct,
+        manager_id = cast('int', manager_id),
+        department_id = cast('int', department_id)    
+)
+    FOLDER = '/interface';
+
+ALTER VIEW employee
+ LAYOUT (bv_hr_employees = [332, 20, 228, 246]);
+
