@@ -1,0 +1,42 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC shift
+    DATASOURCENAME=zz_test
+    CATALOGNAME = '${databases.admin.views.jdbc.shift.CATALOGNAME}'
+    SCHEMANAME = '${databases.admin.views.jdbc.shift.SCHEMANAME}'
+    RELATIONNAME='Shift' 
+    OUTPUTSCHEMA (
+        shiftid = 'ShiftID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='3', description='Primary key for Shift records.', sourcetypeid='-6', sourcetypename='tinyint identity')  NOT NULL NOT SORTABLE IS_AUTOINCREMENT,
+        name = 'Name' :'java.lang.String' (OPT) (sourcetypesize='50', description='Shift description.', sourcetypeid='-9', sourcetypename='Name')  NOT NULL NOT SORTABLE,
+        starttime = 'StartTime' :'java.time.LocalTime' (OPT) (sourcetypedecimals='7', sourcetypesize='16', description='Shift start time.', sourcetypeid='92', sourcetypename='time')  NOT NULL SORTABLE,
+        endtime = 'EndTime' :'java.time.LocalTime' (OPT) (sourcetypedecimals='7', sourcetypesize='16', description='Shift end time.', sourcetypeid='92', sourcetypename='time')  NOT NULL SORTABLE,
+        modifieddate = 'ModifiedDate' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='3', sourcetypesize='23', description='Date and time the record was last updated.', sourcetypeid='93', sourcetypename='datetime')  NOT NULL SORTABLE
+    )
+    CONSTRAINT 'PK_Shift_ShiftID' PRIMARY KEY ( 'ShiftID' )
+    INDEX 'PK_Shift_ShiftID' CLUSTER UNIQUE PRIMARY ( 'ShiftID' )
+    INDEX 'AK_Shift_Name' OTHER UNIQUE ( 'Name' )
+    INDEX 'AK_Shift_StartTime_EndTime' OTHER UNIQUE ( 'StartTime' , 'EndTime' );
+
+CREATE OR REPLACE TABLE shift I18N au_cst (
+        shiftid:int (sourcetypedecimals = '0', sourcetyperadix = '10', autoincrement, sourcetypesize = '3', description = 'Primary key for Shift records.', sourcetypeid = '-6'), 
+        name:text (sourcetypesize = '50', description = 'Shift description.', sourcetypeid = '-9'), 
+        starttime:time (sourcetypedecimals = '7', sourcetypesize = '16', description = 'Shift start time.', sourcetypeid = '92'), 
+        endtime:time (sourcetypedecimals = '7', sourcetypesize = '16', description = 'Shift end time.', sourcetypeid = '92'), 
+        modifieddate:timestamp (sourcetypedecimals = '3', sourcetypesize = '23', description = 'Date and time the record was last updated.', sourcetypeid = '93')
+    )
+    CONSTRAINT 'PK_Shift_ShiftID' PRIMARY KEY ( 'shiftid' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD shift(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD shiftid (any) OPT ANY
+             ADD name (any) OPT ANY
+             ADD starttime (any) OPT ANY
+             ADD endtime (any) OPT ANY
+             ADD modifieddate (any) OPT ANY
+        )
+        OUTPUTLIST (endtime, modifieddate, name, shiftid, starttime
+        )
+        WRAPPER (jdbc shift)
+    );
+

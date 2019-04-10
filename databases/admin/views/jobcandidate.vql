@@ -1,0 +1,40 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC jobcandidate
+    DATASOURCENAME=zz_test
+    CATALOGNAME = '${databases.admin.views.jdbc.jobcandidate.CATALOGNAME}'
+    SCHEMANAME = '${databases.admin.views.jdbc.jobcandidate.SCHEMANAME}'
+    RELATIONNAME='JobCandidate' 
+    OUTPUTSCHEMA (
+        jobcandidateid = 'JobCandidateID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', description='Primary key for JobCandidate records.', sourcetypeid='4', sourcetypename='int identity')  NOT NULL NOT SORTABLE IS_AUTOINCREMENT,
+        businessentityid = 'BusinessEntityID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', description='Employee identification number if applicant was hired. Foreign key to Employee.BusinessEntityID.', sourcetypeid='4', sourcetypename='int')  SORTABLE,
+        resume = 'Resume' :'java.lang.String' (OPT) (sourcetypesize='2147483647', description='Résumé in XML format.', sourcetypeid='-16', sourcetypename='xml')  SORTABLE,
+        modifieddate = 'ModifiedDate' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='3', sourcetypesize='23', description='Date and time the record was last updated.', sourcetypeid='93', sourcetypename='datetime')  NOT NULL SORTABLE
+    )
+    CONSTRAINT 'PK_JobCandidate_JobCandidateID' PRIMARY KEY ( 'JobCandidateID' )
+    CONSTRAINT 'FK_JobCandidate_Employee_BusinessEntityID' FOREIGN KEY ( 'BusinessEntityID' ) 
+    REFERENCES 'AdventureWorks2017'.'HumanResources'.'Employee'( 'BusinessEntityID' )  ON UPDATE RESTRICT  ON DELETE RESTRICT NOT DEFERRABLE 
+    INDEX 'PK_JobCandidate_JobCandidateID' CLUSTER UNIQUE PRIMARY ( 'JobCandidateID' )
+    INDEX 'IX_JobCandidate_BusinessEntityID' OTHER ( 'BusinessEntityID' );
+
+CREATE OR REPLACE TABLE jobcandidate I18N au_cst (
+        jobcandidateid:int (sourcetypedecimals = '0', sourcetyperadix = '10', autoincrement, sourcetypesize = '10', description = 'Primary key for JobCandidate records.', sourcetypeid = '4'), 
+        businessentityid:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', description = 'Employee identification number if applicant was hired. Foreign key to Employee.BusinessEntityID.', sourcetypeid = '4'), 
+        resume:text (sourcetypesize = '2147483647', description = 'Résumé in XML format.', sourcetypeid = '2005'), 
+        modifieddate:timestamp (sourcetypedecimals = '3', sourcetypesize = '23', description = 'Date and time the record was last updated.', sourcetypeid = '93')
+    )
+    CONSTRAINT 'PK_JobCandidate_JobCandidateID' PRIMARY KEY ( 'jobcandidateid' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD jobcandidate(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD jobcandidateid (any) OPT ANY
+             ADD businessentityid (any) OPT ANY
+             ADD resume (any) OPT ANY
+             ADD modifieddate (any) OPT ANY
+        )
+        OUTPUTLIST (businessentityid, jobcandidateid, modifieddate, resume
+        )
+        WRAPPER (jdbc jobcandidate)
+    );
+

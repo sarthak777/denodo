@@ -1,0 +1,51 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC employeedepartmenthistory
+    DATASOURCENAME=zz_test
+    CATALOGNAME = '${databases.admin.views.jdbc.employeedepartmenthistory.CATALOGNAME}'
+    SCHEMANAME = '${databases.admin.views.jdbc.employeedepartmenthistory.SCHEMANAME}'
+    RELATIONNAME='EmployeeDepartmentHistory' 
+    OUTPUTSCHEMA (
+        businessentityid = 'BusinessEntityID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', description='Employee identification number. Foreign key to Employee.BusinessEntityID.', sourcetypeid='4', sourcetypename='int')  NOT NULL SORTABLE,
+        departmentid = 'DepartmentID' :'java.lang.Short' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='5', description='Department in which the employee worked including currently. Foreign key to Department.DepartmentID.', sourcetypeid='5', sourcetypename='smallint')  NOT NULL SORTABLE,
+        shiftid = 'ShiftID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='3', description='Identifies which 8-hour shift the employee works. Foreign key to Shift.Shift.ID.', sourcetypeid='-6', sourcetypename='tinyint')  NOT NULL SORTABLE,
+        startdate = 'StartDate' :'java.time.LocalDate' (OPT) (sourcetypedecimals='0', sourcetypesize='10', description='Date the employee started work in the department.', sourcetypeid='91', sourcetypename='date')  NOT NULL SORTABLE,
+        enddate = 'EndDate' :'java.time.LocalDate' (OPT) (sourcetypedecimals='0', sourcetypesize='10', description='Date the employee left the department. NULL = Current department.', sourcetypeid='91', sourcetypename='date')  SORTABLE,
+        modifieddate = 'ModifiedDate' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='3', sourcetypesize='23', description='Date and time the record was last updated.', sourcetypeid='93', sourcetypename='datetime')  NOT NULL SORTABLE
+    )
+    CONSTRAINT 'PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID' PRIMARY KEY ( 'BusinessEntityID' , 'StartDate' , 'DepartmentID' , 'ShiftID' )
+    CONSTRAINT 'FK_EmployeeDepartmentHistory_Department_DepartmentID' FOREIGN KEY ( 'DepartmentID' ) 
+    REFERENCES 'AdventureWorks2017'.'HumanResources'.'Department'( 'DepartmentID' )  ON UPDATE RESTRICT  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'FK_EmployeeDepartmentHistory_Employee_BusinessEntityID' FOREIGN KEY ( 'BusinessEntityID' ) 
+    REFERENCES 'AdventureWorks2017'.'HumanResources'.'Employee'( 'BusinessEntityID' )  ON UPDATE RESTRICT  ON DELETE RESTRICT NOT DEFERRABLE 
+    CONSTRAINT 'FK_EmployeeDepartmentHistory_Shift_ShiftID' FOREIGN KEY ( 'ShiftID' ) 
+    REFERENCES 'AdventureWorks2017'.'HumanResources'.'Shift'( 'ShiftID' )  ON UPDATE RESTRICT  ON DELETE RESTRICT NOT DEFERRABLE 
+    INDEX 'PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID' CLUSTER UNIQUE PRIMARY ( 'BusinessEntityID' , 'StartDate' , 'DepartmentID' , 'ShiftID' )
+    INDEX 'IX_EmployeeDepartmentHistory_DepartmentID' OTHER ( 'DepartmentID' )
+    INDEX 'IX_EmployeeDepartmentHistory_ShiftID' OTHER ( 'ShiftID' );
+
+CREATE OR REPLACE TABLE employeedepartmenthistory I18N au_cst (
+        businessentityid:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', description = 'Employee identification number. Foreign key to Employee.BusinessEntityID.', sourcetypeid = '4'), 
+        departmentid:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '5', description = 'Department in which the employee worked including currently. Foreign key to Department.DepartmentID.', sourcetypeid = '5'), 
+        shiftid:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '3', description = 'Identifies which 8-hour shift the employee works. Foreign key to Shift.Shift.ID.', sourcetypeid = '-6'), 
+        startdate:localdate (sourcetypedecimals = '0', sourcetypesize = '10', description = 'Date the employee started work in the department.', sourcetypeid = '91'), 
+        enddate:localdate (sourcetypedecimals = '0', sourcetypesize = '10', description = 'Date the employee left the department. NULL = Current department.', sourcetypeid = '91'), 
+        modifieddate:timestamp (sourcetypedecimals = '3', sourcetypesize = '23', description = 'Date and time the record was last updated.', sourcetypeid = '93')
+    )
+    CONSTRAINT 'PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID' PRIMARY KEY ( 'businessentityid' , 'startdate' , 'departmentid' , 'shiftid' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD employeedepartmenthistory(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD businessentityid (any) OPT ANY
+             ADD departmentid (any) OPT ANY
+             ADD shiftid (any) OPT ANY
+             ADD startdate (any) OPT ANY
+             ADD enddate (any) OPT ANY
+             ADD modifieddate (any) OPT ANY
+        )
+        OUTPUTLIST (businessentityid, departmentid, enddate, modifieddate, shiftid, startdate
+        )
+        WRAPPER (jdbc employeedepartmenthistory)
+    );
+

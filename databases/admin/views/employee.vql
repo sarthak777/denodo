@@ -1,0 +1,80 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC employee
+    DATASOURCENAME=zz_test
+    CATALOGNAME = '${databases.admin.views.jdbc.employee.CATALOGNAME}'
+    SCHEMANAME = '${databases.admin.views.jdbc.employee.SCHEMANAME}'
+    RELATIONNAME='Employee' 
+    OUTPUTSCHEMA (
+        businessentityid = 'BusinessEntityID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', description='Primary key for Employee records.  Foreign key to BusinessEntity.BusinessEntityID.', sourcetypeid='4', sourcetypename='int')  NOT NULL SORTABLE,
+        nationalidnumber = 'NationalIDNumber' :'java.lang.String' (OPT) (sourcetypesize='15', description='Unique national identification number such as a social security number.', sourcetypeid='-9', sourcetypename='nvarchar')  NOT NULL SORTABLE,
+        loginid = 'LoginID' :'java.lang.String' (OPT) (sourcetypesize='256', description='Network login.', sourcetypeid='-9', sourcetypename='nvarchar')  NOT NULL SORTABLE,
+        organizationnode = 'OrganizationNode' :'java.sql.Blob' (OPT) (sourcetypesize='892', description='Where the employee is located in corporate hierarchy.', sourcetypeid='-3', sourcetypename='hierarchyid')  NOT SORTABLE,
+        organizationlevel = 'OrganizationLevel' :'java.lang.Short' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='5', description='The depth of the employee in the corporate hierarchy.', sourcetypeid='5', sourcetypename='smallint')  SORTABLE,
+        jobtitle = 'JobTitle' :'java.lang.String' (OPT) (sourcetypesize='50', description='Work title such as Buyer or Sales Representative.', sourcetypeid='-9', sourcetypename='nvarchar')  NOT NULL SORTABLE,
+        birthdate = 'BirthDate' :'java.time.LocalDate' (OPT) (sourcetypedecimals='0', sourcetypesize='10', description='Date of birth.', sourcetypeid='91', sourcetypename='date')  NOT NULL SORTABLE,
+        maritalstatus = 'MaritalStatus' :'java.lang.String' (OPT) (sourcetypesize='1', description='M = Married, S = Single', sourcetypeid='-15', sourcetypename='nchar')  NOT NULL SORTABLE,
+        gender = 'Gender' :'java.lang.String' (OPT) (sourcetypesize='1', description='M = Male, F = Female', sourcetypeid='-15', sourcetypename='nchar')  NOT NULL SORTABLE,
+        hiredate = 'HireDate' :'java.time.LocalDate' (OPT) (sourcetypedecimals='0', sourcetypesize='10', description='Employee hired on this date.', sourcetypeid='91', sourcetypename='date')  NOT NULL SORTABLE,
+        salariedflag = 'SalariedFlag' :'java.lang.Boolean' (OPT) (sourcetypesize='1', description='Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining.', sourcetypeid='-7', sourcetypename='Flag')  NOT NULL NOT SORTABLE,
+        vacationhours = 'VacationHours' :'java.lang.Short' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='5', description='Number of available vacation hours.', sourcetypeid='5', sourcetypename='smallint')  NOT NULL SORTABLE,
+        sickleavehours = 'SickLeaveHours' :'java.lang.Short' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='5', description='Number of available sick leave hours.', sourcetypeid='5', sourcetypename='smallint')  NOT NULL SORTABLE,
+        currentflag = 'CurrentFlag' :'java.lang.Boolean' (OPT) (sourcetypesize='1', description='0 = Inactive, 1 = Active', sourcetypeid='-7', sourcetypename='Flag')  NOT NULL NOT SORTABLE,
+        rowguid = 'rowguid' :'java.lang.String' (OPT) (sourcetypesize='36', description='ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.', sourcetypeid='1', sourcetypename='uniqueidentifier')  NOT NULL NOT SORTABLE,
+        modifieddate = 'ModifiedDate' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='3', sourcetypesize='23', description='Date and time the record was last updated.', sourcetypeid='93', sourcetypename='datetime')  NOT NULL SORTABLE
+    )
+    CONSTRAINT 'PK_Employee_BusinessEntityID' PRIMARY KEY ( 'BusinessEntityID' )
+    CONSTRAINT 'FK_Employee_Person_BusinessEntityID' FOREIGN KEY ( 'BusinessEntityID' ) 
+    REFERENCES 'AdventureWorks2017'.'Person'.'Person'( 'BusinessEntityID' )  ON UPDATE RESTRICT  ON DELETE RESTRICT NOT DEFERRABLE 
+    INDEX 'PK_Employee_BusinessEntityID' CLUSTER UNIQUE PRIMARY ( 'BusinessEntityID' )
+    INDEX 'AK_Employee_LoginID' OTHER UNIQUE ( 'LoginID' )
+    INDEX 'AK_Employee_NationalIDNumber' OTHER UNIQUE ( 'NationalIDNumber' )
+    INDEX 'AK_Employee_rowguid' OTHER UNIQUE ( 'rowguid' )
+    INDEX 'IX_Employee_OrganizationLevel_OrganizationNode' OTHER ( 'OrganizationLevel' , 'OrganizationNode' )
+    INDEX 'IX_Employee_OrganizationNode' OTHER ( 'OrganizationNode' );
+
+CREATE OR REPLACE TABLE employee I18N au_cst (
+        businessentityid:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', description = 'Primary key for Employee records.  Foreign key to BusinessEntity.BusinessEntityID.', sourcetypeid = '4'), 
+        nationalidnumber:text (sourcetypesize = '15', description = 'Unique national identification number such as a social security number.', sourcetypeid = '-9'), 
+        loginid:text (sourcetypesize = '256', description = 'Network login.', sourcetypeid = '-9'), 
+        organizationnode:blob (sourcetypesize = '892', description = 'Where the employee is located in corporate hierarchy.', sourcetypeid = '-3'), 
+        organizationlevel:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '5', description = 'The depth of the employee in the corporate hierarchy.', sourcetypeid = '5'), 
+        jobtitle:text (sourcetypesize = '50', description = 'Work title such as Buyer or Sales Representative.', sourcetypeid = '-9'), 
+        birthdate:localdate (sourcetypedecimals = '0', sourcetypesize = '10', description = 'Date of birth.', sourcetypeid = '91'), 
+        maritalstatus:text (sourcetypesize = '1', description = 'M = Married, S = Single', sourcetypeid = '-15'), 
+        gender:text (sourcetypesize = '1', description = 'M = Male, F = Female', sourcetypeid = '-15'), 
+        hiredate:localdate (sourcetypedecimals = '0', sourcetypesize = '10', description = 'Employee hired on this date.', sourcetypeid = '91'), 
+        salariedflag:boolean (sourcetypesize = '1', description = 'Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining.', sourcetypeid = '-7'), 
+        vacationhours:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '5', description = 'Number of available vacation hours.', sourcetypeid = '5'), 
+        sickleavehours:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '5', description = 'Number of available sick leave hours.', sourcetypeid = '5'), 
+        currentflag:boolean (sourcetypesize = '1', description = '0 = Inactive, 1 = Active', sourcetypeid = '-7'), 
+        rowguid:text (sourcetypesize = '36', description = 'ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.', sourcetypeid = '1'), 
+        modifieddate:timestamp (sourcetypedecimals = '3', sourcetypesize = '23', description = 'Date and time the record was last updated.', sourcetypeid = '93')
+    )
+    CONSTRAINT 'PK_Employee_BusinessEntityID' PRIMARY KEY ( 'businessentityid' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD employee(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD businessentityid (any) OPT ANY
+             ADD nationalidnumber (any) OPT ANY
+             ADD loginid (any) OPT ANY
+             ADD organizationnode NOS ZERO ()
+             ADD organizationlevel (any) OPT ANY
+             ADD jobtitle (any) OPT ANY
+             ADD birthdate (any) OPT ANY
+             ADD maritalstatus (any) OPT ANY
+             ADD gender (any) OPT ANY
+             ADD hiredate (any) OPT ANY
+             ADD salariedflag (any) OPT ANY
+             ADD vacationhours (any) OPT ANY
+             ADD sickleavehours (any) OPT ANY
+             ADD currentflag (any) OPT ANY
+             ADD rowguid (any) OPT ANY
+             ADD modifieddate (any) OPT ANY
+        )
+        OUTPUTLIST (birthdate, businessentityid, currentflag, gender, hiredate, jobtitle, loginid, maritalstatus, modifieddate, nationalidnumber, organizationlevel, organizationnode, rowguid, salariedflag, sickleavehours, vacationhours
+        )
+        WRAPPER (jdbc employee)
+    );
+

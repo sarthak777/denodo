@@ -1,0 +1,42 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC employeepayhistory
+    DATASOURCENAME=zz_test
+    CATALOGNAME = '${databases.admin.views.jdbc.employeepayhistory.CATALOGNAME}'
+    SCHEMANAME = '${databases.admin.views.jdbc.employeepayhistory.SCHEMANAME}'
+    RELATIONNAME='EmployeePayHistory' 
+    OUTPUTSCHEMA (
+        businessentityid = 'BusinessEntityID' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', description='Employee identification number. Foreign key to Employee.BusinessEntityID.', sourcetypeid='4', sourcetypename='int')  NOT NULL SORTABLE,
+        ratechangedate = 'RateChangeDate' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='3', sourcetypesize='23', description='Date the change in pay is effective', sourcetypeid='93', sourcetypename='datetime')  NOT NULL SORTABLE,
+        rate = 'Rate' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='4', sourcetyperadix='10', sourcetypesize='19', description='Salary hourly rate.', sourcetypeid='3', sourcetypename='money')  NOT NULL NOT SORTABLE,
+        payfrequency = 'PayFrequency' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='3', description='1 = Salary received monthly, 2 = Salary received biweekly', sourcetypeid='-6', sourcetypename='tinyint')  NOT NULL SORTABLE,
+        modifieddate = 'ModifiedDate' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='3', sourcetypesize='23', description='Date and time the record was last updated.', sourcetypeid='93', sourcetypename='datetime')  NOT NULL SORTABLE
+    )
+    CONSTRAINT 'PK_EmployeePayHistory_BusinessEntityID_RateChangeDate' PRIMARY KEY ( 'BusinessEntityID' , 'RateChangeDate' )
+    CONSTRAINT 'FK_EmployeePayHistory_Employee_BusinessEntityID' FOREIGN KEY ( 'BusinessEntityID' ) 
+    REFERENCES 'AdventureWorks2017'.'HumanResources'.'Employee'( 'BusinessEntityID' )  ON UPDATE RESTRICT  ON DELETE RESTRICT NOT DEFERRABLE 
+    INDEX 'PK_EmployeePayHistory_BusinessEntityID_RateChangeDate' CLUSTER UNIQUE PRIMARY ( 'BusinessEntityID' , 'RateChangeDate' );
+
+CREATE OR REPLACE TABLE employeepayhistory I18N au_cst (
+        businessentityid:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '10', description = 'Employee identification number. Foreign key to Employee.BusinessEntityID.', sourcetypeid = '4'), 
+        ratechangedate:timestamp (sourcetypedecimals = '3', sourcetypesize = '23', description = 'Date the change in pay is effective', sourcetypeid = '93'), 
+        rate:decimal (sourcetypedecimals = '4', sourcetyperadix = '10', sourcetypesize = '19', description = 'Salary hourly rate.', sourcetypeid = '3'), 
+        payfrequency:int (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '3', description = '1 = Salary received monthly, 2 = Salary received biweekly', sourcetypeid = '-6'), 
+        modifieddate:timestamp (sourcetypedecimals = '3', sourcetypesize = '23', description = 'Date and time the record was last updated.', sourcetypeid = '93')
+    )
+    CONSTRAINT 'PK_EmployeePayHistory_BusinessEntityID_RateChangeDate' PRIMARY KEY ( 'businessentityid' , 'ratechangedate' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD employeepayhistory(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD businessentityid (any) OPT ANY
+             ADD ratechangedate (any) OPT ANY
+             ADD rate (any) OPT ANY
+             ADD payfrequency (any) OPT ANY
+             ADD modifieddate (any) OPT ANY
+        )
+        OUTPUTLIST (businessentityid, modifieddate, payfrequency, rate, ratechangedate
+        )
+        WRAPPER (jdbc employeepayhistory)
+    );
+

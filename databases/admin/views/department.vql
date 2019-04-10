@@ -1,0 +1,38 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC department
+    DATASOURCENAME=zz_test
+    CATALOGNAME = '${databases.admin.views.jdbc.department.CATALOGNAME}'
+    SCHEMANAME = '${databases.admin.views.jdbc.department.SCHEMANAME}'
+    RELATIONNAME='Department' 
+    OUTPUTSCHEMA (
+        departmentid = 'DepartmentID' :'java.lang.Short' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='5', description='Primary key for Department records.', sourcetypeid='5', sourcetypename='smallint identity')  NOT NULL NOT SORTABLE IS_AUTOINCREMENT,
+        name = 'Name' :'java.lang.String' (OPT) (sourcetypesize='50', description='Name of the department.', sourcetypeid='-9', sourcetypename='Name')  NOT NULL NOT SORTABLE,
+        groupname = 'GroupName' :'java.lang.String' (OPT) (sourcetypesize='50', description='Name of the group to which the department belongs.', sourcetypeid='-9', sourcetypename='Name')  NOT NULL NOT SORTABLE,
+        modifieddate = 'ModifiedDate' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='3', sourcetypesize='23', description='Date and time the record was last updated.', sourcetypeid='93', sourcetypename='datetime')  NOT NULL SORTABLE
+    )
+    CONSTRAINT 'PK_Department_DepartmentID' PRIMARY KEY ( 'DepartmentID' )
+    INDEX 'PK_Department_DepartmentID' CLUSTER UNIQUE PRIMARY ( 'DepartmentID' )
+    INDEX 'AK_Department_Name' OTHER UNIQUE ( 'Name' );
+
+CREATE OR REPLACE TABLE department I18N au_cst (
+        departmentid:int (sourcetypedecimals = '0', sourcetyperadix = '10', autoincrement, sourcetypesize = '5', description = 'Primary key for Department records.', sourcetypeid = '5'), 
+        name:text (sourcetypesize = '50', description = 'Name of the department.', sourcetypeid = '-9'), 
+        groupname:text (sourcetypesize = '50', description = 'Name of the group to which the department belongs.', sourcetypeid = '-9'), 
+        modifieddate:timestamp (sourcetypedecimals = '3', sourcetypesize = '23', description = 'Date and time the record was last updated.', sourcetypeid = '93')
+    )
+    CONSTRAINT 'PK_Department_DepartmentID' PRIMARY KEY ( 'departmentid' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD department(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD departmentid (any) OPT ANY
+             ADD name (any) OPT ANY
+             ADD groupname (any) OPT ANY
+             ADD modifieddate (any) OPT ANY
+        )
+        OUTPUTLIST (departmentid, groupname, modifieddate, name
+        )
+        WRAPPER (jdbc department)
+    );
+
