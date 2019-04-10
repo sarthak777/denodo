@@ -1,0 +1,4 @@
+﻿/databases/labs_db_basics/folder.base_views/base_views.vql
+/databases/labs_db_basics/folder.data_sources/data_sources.vql
+/databases/labs_db_basics/folder.data_sources/datasources/jdbc/ds_human_resources.vql
+/databases/labs_db_basics/folder.base_views/views/bv_hr_countries.vql

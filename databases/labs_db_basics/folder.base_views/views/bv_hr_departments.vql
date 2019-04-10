@@ -1,0 +1,40 @@
+﻿CREATE OR REPLACE WRAPPER JDBC departments
+    FOLDER = '/base_views'
+    DATASOURCENAME=ds_human_resources
+    RELATIONNAME='DEPARTMENTS' 
+    OUTPUTSCHEMA (
+        department_id = 'DEPARTMENT_ID' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER(4)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        department_name = 'DEPARTMENT_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(30)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        location_id = 'LOCATION_ID' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER(4)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        manager_id = 'MANAGER_ID' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER(6)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE
+    )
+    CONSTRAINT 'DEPT_ID_PK' PRIMARY KEY ( 'DEPARTMENT_ID' )
+    FOREIGN KEY ( 'MANAGER_ID' ) 
+    REFERENCES 'EMPLOYEES'( 'EMPLOYEE_ID' )  ON UPDATE NO ACTION  ON DELETE NO ACTION INITIALLY DEFERRED 
+    CONSTRAINT 'DEPT_LOC_FK' FOREIGN KEY ( 'LOCATION_ID' ) 
+    REFERENCES 'LOCATIONS'( 'LOCATION_ID' )  ON UPDATE NO ACTION  ON DELETE NO ACTION INITIALLY DEFERRED 
+    INDEX 'sqlite_autoindex_DEPARTMENTS_1' OTHER UNIQUE PRIMARY ( 'DEPARTMENT_ID' );
+
+CREATE OR REPLACE TABLE bv_hr_departments I18N au_cst (
+        department_id:double (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '6'), 
+        department_name:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        location_id:double (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '6'), 
+        manager_id:double (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '6')
+    )
+    FOLDER = '/base_views'
+    CONSTRAINT 'DEPT_ID_PK' PRIMARY KEY ( 'department_id' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD departments(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD department_id (any) OPT ANY
+             ADD department_name (any) OPT ANY
+             ADD location_id (any) OPT ANY
+             ADD manager_id (any) OPT ANY
+        )
+        OUTPUTLIST (department_id, department_name, location_id, manager_id
+        )
+        WRAPPER (jdbc departments)
+    );
+

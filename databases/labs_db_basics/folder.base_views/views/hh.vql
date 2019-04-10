@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW hh FOLDER = '/base_views' AS SELECT bv_hr_countries.country_id AS country_id, bv_hr_countries.country_name AS country_name, bv_hr_countries.region_id AS region_id FROM bv_hr_countries;
+
+ALTER VIEW hh
+ LAYOUT (bv_hr_countries = [20, 20, 208, 85]);
+

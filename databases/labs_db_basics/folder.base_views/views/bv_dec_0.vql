@@ -1,0 +1,64 @@
+﻿CREATE OR REPLACE WRAPPER ODBC dec_0
+    FOLDER = '/base_views'
+    DATASOURCENAME=ds_odbc_excel
+    SCHEMANAME='Invoices_2015.xlsx'  ESCAPE
+    RELATIONNAME='[Dec$$]' 
+    OUTPUTSCHEMA (
+    invoicesof_0 = 'Invoices of:' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='8', sourcetypesize='15')  ESCAPE SORTABLE,
+    dec = 'Dec' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='255')  ESCAPE SORTABLE,
+    f3 = 'F3' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='8', sourcetypesize='15')  SORTABLE,
+    f4 = 'F4' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='255')  SORTABLE,
+    f5 = 'F5' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='255')  SORTABLE,
+    f6 = 'F6' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='255')  SORTABLE,
+    f7 = 'F7' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='255')  SORTABLE,
+    f8 = 'F8' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='255')  SORTABLE,
+    f9 = 'F9' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='255')  SORTABLE,
+    f10 = 'F10' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='255')  SORTABLE,
+    f11 = 'F11' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='255')  SORTABLE,
+    f12 = 'F12' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='255')  SORTABLE,
+    f13 = 'F13' :'java.lang.String' (OPT) (sourcetypename='VARCHAR', sourcetypeid='12', sourcetypesize='255')  SORTABLE,
+    f14 = 'F14' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='8', sourcetypesize='15')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE bv_dec_0 I18N au_cst (
+        invoicesof_0:double (sourcetyperadix = '10', sourcetypesize = '15', sourcetypeid = '8'), 
+        dec:text (sourcetypesize = '255', sourcetypeid = '12'), 
+        f3:double (sourcetyperadix = '10', sourcetypesize = '15', sourcetypeid = '8'), 
+        f4:text (sourcetypesize = '255', sourcetypeid = '12'), 
+        f5:text (sourcetypesize = '255', sourcetypeid = '12'), 
+        f6:text (sourcetypesize = '255', sourcetypeid = '12'), 
+        f7:text (sourcetypesize = '255', sourcetypeid = '12'), 
+        f8:text (sourcetypesize = '255', sourcetypeid = '12'), 
+        f9:text (sourcetypesize = '255', sourcetypeid = '12'), 
+        f10:text (sourcetypesize = '255', sourcetypeid = '12'), 
+        f11:text (sourcetypesize = '255', sourcetypeid = '12'), 
+        f12:text (sourcetypesize = '255', sourcetypeid = '12'), 
+        f13:text (sourcetypesize = '255', sourcetypeid = '12'), 
+        f14:double (sourcetyperadix = '10', sourcetypesize = '15', sourcetypeid = '8')
+    )
+    FOLDER = '/base_views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD dec_0(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD invoicesof_0 (any) OPT ANY
+             ADD dec (any) OPT ANY
+             ADD f3 (any) OPT ANY
+             ADD f4 (any) OPT ANY
+             ADD f5 (any) OPT ANY
+             ADD f6 (any) OPT ANY
+             ADD f7 (any) OPT ANY
+             ADD f8 (any) OPT ANY
+             ADD f9 (any) OPT ANY
+             ADD f10 (any) OPT ANY
+             ADD f11 (any) OPT ANY
+             ADD f12 (any) OPT ANY
+             ADD f13 (any) OPT ANY
+             ADD f14 (any) OPT ANY
+        )
+        OUTPUTLIST (dec, f10, f11, f12, f13, f14, f3, f4, f5, f6, f7, f8, f9, invoicesof_0
+        )
+        WRAPPER (odbc dec_0)
+    );
+

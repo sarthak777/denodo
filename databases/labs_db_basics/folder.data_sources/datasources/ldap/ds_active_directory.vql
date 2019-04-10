@@ -1,0 +1,10 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE LDAP ds_active_directory
+    FOLDER = '/data_sources'
+    URI='${databases.labs_db_basics.folder.data_sources.datasources.ldap.ds_active_directory.URI}'
+    USERNAME='${databases.labs_db_basics.folder.data_sources.datasources.ldap.ds_active_directory.USERNAME}'
+    USERPASSWORD='${databases.labs_db_basics.folder.data_sources.datasources.ldap.ds_active_directory.USERPASSWORD}' ${databases.labs_db_basics.folder.data_sources.datasources.ldap.ds_active_directory.USERPASSWORD.ENCRYPTED}
+    USEPAGING=FALSE
+    MAXPAGESIZE=1000
+    POOL_ENABLED = TRUE;
+

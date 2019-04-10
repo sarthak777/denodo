@@ -1,0 +1,64 @@
+﻿CREATE OR REPLACE WRAPPER JDBC bv_hr_employees
+    FOLDER = '/base_views'
+    DATASOURCENAME=ds_human_resources
+    RELATIONNAME='EMPLOYEES' 
+    OUTPUTSCHEMA (
+        employee_id = 'EMPLOYEE_ID' :'java.lang.Double' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='6', sourcetypename='NUMBER(6)')  NOT NULL NOT SORTABLE,
+        first_name = 'FIRST_NAME' :'java.lang.String' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='12', sourcetypename='VARCHAR2(20)')  NOT SORTABLE,
+        last_name = 'LAST_NAME' :'java.lang.String' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='12', sourcetypename='VARCHAR2(25)')  NOT NULL NOT SORTABLE,
+        email = 'EMAIL' :'java.lang.String' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='12', sourcetypename='VARCHAR2(50)')  NOT NULL NOT SORTABLE,
+        phone_number = 'PHONE_NUMBER' :'java.lang.String' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='12', sourcetypename='VARCHAR2(20)')  NOT SORTABLE,
+        hire_date = 'HIRE_DATE' :'java.lang.String' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='12', sourcetypename='DATE')  NOT NULL SORTABLE,
+        job_id = 'JOB_ID' :'java.lang.String' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='12', sourcetypename='VARCHAR2(10)')  NOT NULL NOT SORTABLE,
+        salary = 'SALARY' :'java.lang.Double' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='6', sourcetypename='NUMBER(8,2)')  NOT SORTABLE,
+        commission_pct = 'COMMISSION_PCT' :'java.lang.Double' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='6', sourcetypename='NUMBER(2,2)')  NOT SORTABLE,
+        manager_id = 'MANAGER_ID' :'java.lang.Double' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='6', sourcetypename='NUMBER(6)')  NOT SORTABLE,
+        department_id = 'DEPARTMENT_ID' :'java.lang.Double' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='6', sourcetypename='NUMBER(4)')  NOT SORTABLE
+    )
+    CONSTRAINT 'EMP_EMP_ID_PK' PRIMARY KEY ( 'EMPLOYEE_ID' )
+    CONSTRAINT 'EMP_DEPT_FK' FOREIGN KEY ( 'DEPARTMENT_ID' ) 
+    REFERENCES 'DEPARTMENTS'( 'DEPARTMENT_ID' )  ON UPDATE NO ACTION  ON DELETE NO ACTION INITIALLY DEFERRED 
+    CONSTRAINT 'EMP_MANAGER_FK' FOREIGN KEY ( 'MANAGER_ID' ) 
+    REFERENCES 'EMPLOYEES'( 'EMPLOYEE_ID' )  ON UPDATE NO ACTION  ON DELETE NO ACTION INITIALLY DEFERRED 
+    CONSTRAINT 'EMP_JOB_FK' FOREIGN KEY ( 'JOB_ID' ) 
+    REFERENCES 'JOBS'( 'JOB_ID' )  ON UPDATE NO ACTION  ON DELETE NO ACTION INITIALLY DEFERRED 
+    INDEX 'sqlite_autoindex_EMPLOYEES_2' OTHER UNIQUE ( 'EMAIL' )
+    INDEX 'sqlite_autoindex_EMPLOYEES_1' OTHER UNIQUE PRIMARY ( 'EMPLOYEE_ID' );
+
+CREATE OR REPLACE TABLE bv_hr_employees I18N au_cst (
+        employee_id:decimal (sourcetypedecimals = '0', sourcetyperadix = '10', sourcetypesize = '2000000000', sourcetypeid = '6'), 
+        first_name:text (sourcetypedecimals = '10', sourcetyperadix = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        last_name:text (sourcetypedecimals = '10', sourcetyperadix = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        email:text (sourcetypedecimals = '10', sourcetyperadix = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        phone_number:text (sourcetypedecimals = '10', sourcetyperadix = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        hire_date:text, 
+        job_id:text (sourcetypedecimals = '10', sourcetyperadix = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        salary:double (sourcetypedecimals = '10', sourcetyperadix = '10', sourcetypesize = '2000000000', sourcetypeid = '6'), 
+        commission_pct:double (sourcetypedecimals = '10', sourcetyperadix = '10', sourcetypesize = '2000000000', sourcetypeid = '6'), 
+        manager_id:double (sourcetypedecimals = '10', sourcetyperadix = '10', sourcetypesize = '2000000000', sourcetypeid = '6'), 
+        department_id:double (sourcetypedecimals = '10', sourcetyperadix = '10', sourcetypesize = '2000000000', sourcetypeid = '6')
+    )
+    FOLDER = '/base_views'
+    PRIMARY KEY ( 'employee_id' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_hr_employees(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD employee_id (any) OPT ANY
+             ADD first_name (any) OPT ANY
+             ADD last_name (any) OPT ANY
+             ADD email (any) OPT ANY
+             ADD phone_number (any) OPT ANY
+             ADD hire_date (any) OPT ANY
+             ADD job_id (any) OPT ANY
+             ADD salary (any) OPT ANY
+             ADD commission_pct (any) OPT ANY
+             ADD manager_id (any) OPT ANY
+             ADD department_id (any) OPT ANY
+        )
+        OUTPUTLIST (commission_pct, department_id, email, employee_id, first_name, hire_date, job_id, last_name, manager_id, phone_number, salary
+        )
+        WRAPPER (jdbc bv_hr_employees)
+    );
+

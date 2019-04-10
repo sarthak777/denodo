@@ -1,0 +1,30 @@
+﻿CREATE OR REPLACE WRAPPER JDBC regions
+    FOLDER = '/base_views'
+    DATASOURCENAME=ds_human_resources
+    RELATIONNAME='REGIONS' 
+    OUTPUTSCHEMA (
+        region_id = 'REGION_ID' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        region_name = 'REGION_NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(25)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE
+    )
+    CONSTRAINT 'REG_ID_PK' PRIMARY KEY ( 'REGION_ID' )
+    INDEX 'sqlite_autoindex_REGIONS_1' OTHER UNIQUE PRIMARY ( 'REGION_ID' );
+
+CREATE OR REPLACE TABLE bv_hr_regions I18N au_cst (
+        region_id:double (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '6'), 
+        region_name:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12')
+    )
+    FOLDER = '/base_views'
+    CONSTRAINT 'REG_ID_PK' PRIMARY KEY ( 'region_id' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD regions(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD region_id (any) OPT ANY
+             ADD region_name (any) OPT ANY
+        )
+        OUTPUTLIST (region_id, region_name
+        )
+        WRAPPER (jdbc regions)
+    );
+

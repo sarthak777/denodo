@@ -1,0 +1,49 @@
+﻿CREATE OR REPLACE WRAPPER JSON bv_sales_all
+    FOLDER = '/base_views'
+    DATASOURCENAME=ds_sales
+    TUPLEROOT '/JSONFile/salesData/sales'
+    OUTPUTSCHEMA (jsonfile = 'JSONFile' : REGISTER OF (
+        productid_0 = 'JSONFile.salesData.productId' : 'java.lang.String',
+        saleid = 'JSONFile.salesData.sales.saleId' : 'java.lang.String',
+        productid = 'JSONFile.salesData.sales.productId' : 'java.lang.String',
+        employeeid = 'JSONFile.salesData.sales.employeeId' : 'java.lang.String',
+        customerid = 'JSONFile.salesData.sales.customerId' : 'java.lang.String',
+        saledate = 'JSONFile.salesData.sales.saleDate' : 'java.lang.String',
+        bundleamount = 'JSONFile.salesData.sales.bundleAmount' : 'java.lang.String',
+        productsaleprice = 'JSONFile.salesData.sales.productSalePrice' : 'java.lang.String',
+        totalprice = 'JSONFile.salesData.sales.totalPrice' : 'java.lang.String'
+    )
+    );
+
+CREATE OR REPLACE TABLE bv_sales_all I18N au_cst (
+        productid_0:text, 
+        saleid:text, 
+        productid:text, 
+        employeeid:text, 
+        customerid:text, 
+        saledate:text, 
+        bundleamount:text, 
+        productsaleprice:text, 
+        totalprice:text
+    )
+    FOLDER = '/base_views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_sales_all(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD productid_0 NOS ZERO ()
+             ADD saleid NOS ZERO ()
+             ADD productid NOS ZERO ()
+             ADD employeeid NOS ZERO ()
+             ADD customerid NOS ZERO ()
+             ADD saledate NOS ZERO ()
+             ADD bundleamount NOS ZERO ()
+             ADD productsaleprice NOS ZERO ()
+             ADD totalprice NOS ZERO ()
+        )
+        OUTPUTLIST (bundleamount, customerid, employeeid, productid, productid_0, productsaleprice, saledate, saleid, totalprice
+        )
+        WRAPPER (json bv_sales_all)
+    );
+

@@ -1,0 +1,28 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE ODBC ds_odbc_excel
+    FOLDER = '/data_sources'
+    DSN = '${databases.labs_db_basics.folder.data_sources.datasources.odbc.ds_odbc_excel.DSN}'
+    WITH PASS-THROUGH SESSION CREDENTIALS ( 
+        USERNAME = '${databases.labs_db_basics.folder.data_sources.datasources.odbc.ds_odbc_excel.USERNAME}'
+        USERPASSWORD = '${databases.labs_db_basics.folder.data_sources.datasources.odbc.ds_odbc_excel.USERPASSWORD}'
+    ) 
+    CLASSPATH = 'jdbc-odbc'
+    DATABASENAME = 'excel'
+    DATABASEVERSION = '8'
+    FETCHSIZE = 1000
+    VALIDATIONQUERY = 'Select 1'
+    INITIALSIZE = 4
+    MAXIDLE = -1
+    MINIDLE = 0
+    MAXACTIVE = 20
+    EXHAUSTEDACTION = 1
+    TESTONBORROW = true
+    TESTONRETURN = false
+    TESTWHILEIDLE = false
+    TIMEBETWEENEVICTION = -1
+    NUMTESTPEREVICTION = 3
+    MINEVICTABLETIME = 1800000
+    POOLPREPAREDSTATEMENTS = false
+    MAXSLEEPINGPS = 4
+    INITIALCAPACITYPS = 8;
+

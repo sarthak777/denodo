@@ -1,0 +1,61 @@
+﻿CREATE OR REPLACE WRAPPER JSON bv_sales_all_array
+    FOLDER = '/base_views'
+    DATASOURCENAME=ds_sales
+    TUPLEROOT '/JSONFile'
+    OUTPUTSCHEMA (jsonfile = 'JSONFile' : REGISTER OF (
+        salesdata = 'salesData' : ARRAY OF (
+            salesdata = 'salesData' : REGISTER OF (
+                productid = 'productId' : 'java.lang.String',
+                sales = 'sales' : ARRAY OF (
+                    sales = 'sales' : REGISTER OF (
+                        saleid = 'saleId' : 'java.lang.String',
+                        productid = 'productId' : 'java.lang.String',
+                        employeeid = 'employeeId' : 'java.lang.String',
+                        customerid = 'customerId' : 'java.lang.String',
+                        saledate = 'saleDate' : 'java.lang.String',
+                        bundleamount = 'bundleAmount' : 'java.lang.String',
+                        productsaleprice = 'productSalePrice' : 'java.lang.String',
+                        totalprice = 'totalPrice' : 'java.lang.String'
+                    )
+                )
+            )
+        )
+    )
+    );
+
+CREATE OR REPLACE TYPE bv_sales_all_array_salesdata_salesdata_sales_sales AS REGISTER OF (saleid:text, productid:text, employeeid:text, customerid:text, saledate:text, bundleamount:text, productsaleprice:text, totalprice:text);
+
+CREATE OR REPLACE TYPE bv_sales_all_array_salesdata_salesdata_sales AS ARRAY OF bv_sales_all_array_salesdata_salesdata_sales_sales;
+
+CREATE OR REPLACE TYPE bv_sales_all_array_salesdata_salesdata AS REGISTER OF (productid:text, sales:bv_sales_all_array_salesdata_salesdata_sales);
+
+CREATE OR REPLACE TYPE bv_sales_all_array_salesdata AS ARRAY OF bv_sales_all_array_salesdata_salesdata;
+
+CREATE OR REPLACE TABLE bv_sales_all_array I18N au_cst (
+        salesdata:bv_sales_all_array_salesdata
+    )
+    FOLDER = '/base_views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_sales_all_array(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD salesdata NOS ZERO ()
+             ADD salesdata NOS ZERO ()
+             ADD salesdata.productid NOS ZERO ()
+             ADD salesdata.sales NOS ZERO ()
+             ADD salesdata.sales NOS ZERO ()
+             ADD salesdata.sales.saleid NOS ZERO ()
+             ADD salesdata.sales.productid NOS ZERO ()
+             ADD salesdata.sales.employeeid NOS ZERO ()
+             ADD salesdata.sales.customerid NOS ZERO ()
+             ADD salesdata.sales.saledate NOS ZERO ()
+             ADD salesdata.sales.bundleamount NOS ZERO ()
+             ADD salesdata.sales.productsaleprice NOS ZERO ()
+             ADD salesdata.sales.totalprice NOS ZERO ()
+        )
+        OUTPUTLIST (salesdata
+        )
+        WRAPPER (json bv_sales_all_array)
+    );
+

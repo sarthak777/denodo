@@ -1,0 +1,88 @@
+﻿CREATE OR REPLACE WRAPPER LDAP bv_ad_computer
+    FOLDER = '/base_views'
+    DATASOURCENAME=ds_active_directory
+    OBJECTCLASSES='computer'
+    RECURSIVESEARCH=TRUE
+    SINGLE-VALUE=FALSE
+    OUTPUTSCHEMA (
+        cn = 'cn' : ARRAY OF (
+            cn = 'CN' : REGISTER OF (
+                cn = 'cn' : 'java.lang.String' (OPT)
+            )
+        ),
+        description = 'description' : ARRAY OF (
+            description = 'DESCRIPTION' : REGISTER OF (
+                description = 'description' : 'java.lang.String' (OPT)
+            )
+        ),
+        protocolinformation = 'protocolInformation' : ARRAY OF (
+            protocolinformation = 'protocolInformation' : REGISTER OF (
+                protocolinformation = 'protocolInformation' : 'java.lang.String' (OPT)
+            )
+        ),
+        serialnumber = 'serialNumber' : ARRAY OF (
+            serialnumber = 'serialNumber' : REGISTER OF (
+                serialnumber = 'serialNumber' : 'java.lang.String' (OPT)
+            )
+        ),
+        supportedalgorithms = 'supportedAlgorithms' : ARRAY OF (
+            supportedalgorithms = 'supportedAlgorithms' : REGISTER OF (
+                supportedalgorithms = 'supportedAlgorithms' : 'java.lang.String' (OPT)
+            )
+        )
+    );
+
+CREATE OR REPLACE TYPE computer_cn_cn AS REGISTER OF (cn:text);
+
+CREATE OR REPLACE TYPE computer_cn AS ARRAY OF computer_cn_cn;
+
+CREATE OR REPLACE TYPE computer_description_description AS REGISTER OF (description:text);
+
+CREATE OR REPLACE TYPE computer_description AS ARRAY OF computer_description_description;
+
+CREATE OR REPLACE TYPE computer_protocolinformation_protocolinformation AS REGISTER OF (protocolinformation:text);
+
+CREATE OR REPLACE TYPE computer_protocolinformation AS ARRAY OF computer_protocolinformation_protocolinformation;
+
+CREATE OR REPLACE TYPE computer_serialnumber_serialnumber AS REGISTER OF (serialnumber:text);
+
+CREATE OR REPLACE TYPE computer_serialnumber AS ARRAY OF computer_serialnumber_serialnumber;
+
+CREATE OR REPLACE TYPE computer_supportedalgorithms_supportedalgorithms AS REGISTER OF (supportedalgorithms:text);
+
+CREATE OR REPLACE TYPE computer_supportedalgorithms AS ARRAY OF computer_supportedalgorithms_supportedalgorithms;
+
+CREATE OR REPLACE TABLE bv_ad_computer I18N au_cst (
+        cn:computer_cn, 
+        description:computer_description, 
+        protocolinformation:computer_protocolinformation, 
+        serialnumber:computer_serialnumber, 
+        supportedalgorithms:computer_supportedalgorithms
+    )
+    FOLDER = '/base_views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_ad_computer(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD cn NOS ZERO ()
+             ADD cn NOS ZERO ()
+             ADD cn.cn (any) OPT ANY
+             ADD description NOS ZERO ()
+             ADD description NOS ZERO ()
+             ADD description.description (any) OPT ANY
+             ADD protocolinformation NOS ZERO ()
+             ADD protocolinformation NOS ZERO ()
+             ADD protocolinformation.protocolinformation (any) OPT ANY
+             ADD serialnumber NOS ZERO ()
+             ADD serialnumber NOS ZERO ()
+             ADD serialnumber.serialnumber (any) OPT ANY
+             ADD supportedalgorithms NOS ZERO ()
+             ADD supportedalgorithms NOS ZERO ()
+             ADD supportedalgorithms.supportedalgorithms (any) OPT ANY
+        )
+        OUTPUTLIST (cn, description, protocolinformation, serialnumber, supportedalgorithms
+        )
+        WRAPPER (ldap bv_ad_computer)
+    );
+

@@ -1,0 +1,42 @@
+﻿CREATE OR REPLACE TABLE bv_invoices I18N au_cst (
+        invoice_id:int (sourcetypeid = '4'), 
+        date_invoice:text (sourcetypeid = '12'), 
+        order_id:int (sourcetypeid = '4'), 
+        date_placed:text (sourcetypeid = '12'), 
+        date_delivered:text (sourcetypeid = '12'), 
+        date_closed:text (sourcetypeid = '12'), 
+        first_name:text (sourcetypeid = '12'), 
+        last_name:text (sourcetypeid = '12'), 
+        email:text (sourcetypeid = '12'), 
+        address:text (sourcetypeid = '12'), 
+        country:text (sourcetypeid = '12'), 
+        postal_code:text (sourcetypeid = '12'), 
+        phone:text (sourcetypeid = '12'), 
+        amount:int (sourcetypeid = '4')
+    )
+    FOLDER = '/base_views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD ds_invoices(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD invoice_id (any) OPT ANY
+             ADD date_invoice (any) OPT ANY
+             ADD order_id (any) OPT ANY
+             ADD date_placed (any) OPT ANY
+             ADD date_delivered (any) OPT ANY
+             ADD date_closed (any) OPT ANY
+             ADD first_name (any) OPT ANY
+             ADD last_name (any) OPT ANY
+             ADD email (any) OPT ANY
+             ADD address (any) OPT ANY
+             ADD country (any) OPT ANY
+             ADD postal_code (any) OPT ANY
+             ADD phone (any) OPT ANY
+             ADD amount (any) OPT ANY
+        )
+        OUTPUTLIST (address, amount, country, date_closed, date_delivered, date_invoice, date_placed, email, first_name, invoice_id, last_name, order_id, phone, postal_code
+        )
+        WRAPPER (custom ds_invoices)
+    );
+

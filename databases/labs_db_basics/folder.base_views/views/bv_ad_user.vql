@@ -1,0 +1,102 @@
+﻿CREATE OR REPLACE WRAPPER LDAP bv_ad_user
+    FOLDER = '/base_views'
+    DATASOURCENAME=ds_active_directory
+    OBJECTCLASSES='person'
+    LDAPEXPRESSION='(&(objectClass=user)(objectClass=person) (!(objectClass=computer)))'   
+    RECURSIVESEARCH=TRUE
+    SINGLE-VALUE=FALSE
+    OUTPUTSCHEMA (
+        cn = 'cn' : ARRAY OF (
+            cn = 'CN' : REGISTER OF (
+                cn = 'cn' : 'java.lang.String'
+            )
+        ),
+        distinguishedname = 'distinguishedName' : ARRAY OF (
+            distinguishedname = 'distinguishedName' : REGISTER OF (
+                distinguishedname = 'distinguishedName' : 'java.lang.String'
+            )
+        ),
+        givenname = 'givenName' : ARRAY OF (
+            givenname = 'givenName' : REGISTER OF (
+                givenname = 'givenName' : 'java.lang.String'
+            )
+        ),
+        mail = 'mail' : ARRAY OF (
+            mail = 'MAIL' : REGISTER OF (
+                mail = 'mail' : 'java.lang.String'
+            )
+        ),
+        sn = 'sn' : ARRAY OF (
+            sn = 'SN' : REGISTER OF (
+                sn = 'sn' : 'java.lang.String'
+            )
+        ),
+        uid = 'uid' : ARRAY OF (
+            uid = 'UID' : REGISTER OF (
+                uid = 'uid' : 'java.lang.String'
+            )
+        )
+    );
+
+CREATE OR REPLACE TYPE bv_ad_user_cn_cn AS REGISTER OF (cn:text);
+
+CREATE OR REPLACE TYPE bv_ad_user_cn AS ARRAY OF bv_ad_user_cn_cn;
+
+CREATE OR REPLACE TYPE bv_ad_user_distinguishedname_distinguishedname AS REGISTER OF (distinguishedname:text);
+
+CREATE OR REPLACE TYPE bv_ad_user_distinguishedname AS ARRAY OF bv_ad_user_distinguishedname_distinguishedname;
+
+CREATE OR REPLACE TYPE bv_ad_user_givenname_givenname AS REGISTER OF (givenname:text);
+
+CREATE OR REPLACE TYPE bv_ad_user_givenname AS ARRAY OF bv_ad_user_givenname_givenname;
+
+CREATE OR REPLACE TYPE bv_ad_user_mail_mail AS REGISTER OF (mail:text);
+
+CREATE OR REPLACE TYPE bv_ad_user_mail AS ARRAY OF bv_ad_user_mail_mail;
+
+CREATE OR REPLACE TYPE bv_ad_user_sn_sn AS REGISTER OF (sn:text);
+
+CREATE OR REPLACE TYPE bv_ad_user_sn AS ARRAY OF bv_ad_user_sn_sn;
+
+CREATE OR REPLACE TYPE bv_ad_user_uid_uid AS REGISTER OF (uid:text);
+
+CREATE OR REPLACE TYPE bv_ad_user_uid AS ARRAY OF bv_ad_user_uid_uid;
+
+CREATE OR REPLACE TABLE bv_ad_user I18N au_cst (
+        cn:bv_ad_user_cn, 
+        distinguishedname:bv_ad_user_distinguishedname, 
+        givenname:bv_ad_user_givenname, 
+        mail:bv_ad_user_mail, 
+        sn:bv_ad_user_sn, 
+        uid:bv_ad_user_uid
+    )
+    FOLDER = '/base_views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_ad_user(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD cn NOS ZERO ()
+             ADD cn NOS ZERO ()
+             ADD cn.cn NOS ZERO ()
+             ADD distinguishedname NOS ZERO ()
+             ADD distinguishedname NOS ZERO ()
+             ADD distinguishedname.distinguishedname NOS ZERO ()
+             ADD givenname NOS ZERO ()
+             ADD givenname NOS ZERO ()
+             ADD givenname.givenname NOS ZERO ()
+             ADD mail NOS ZERO ()
+             ADD mail NOS ZERO ()
+             ADD mail.mail NOS ZERO ()
+             ADD sn NOS ZERO ()
+             ADD sn NOS ZERO ()
+             ADD sn.sn NOS ZERO ()
+             ADD uid NOS ZERO ()
+             ADD uid NOS ZERO ()
+             ADD uid.uid NOS ZERO ()
+        )
+        OUTPUTLIST (cn, distinguishedname, givenname, mail, sn, uid
+        )
+        WRAPPER (ldap bv_ad_user)
+    );
+

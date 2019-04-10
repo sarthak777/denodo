@@ -1,0 +1,18 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JSON ds_sales_search
+    FOLDER = '/data_sources'
+    ROUTE HTTP 'http.CommonsHttpClientConnection,120000' POST '${databases.labs_db_basics.folder.data_sources.datasources.json.ds_sales_search.ROUTE.HTTP.URL}'
+    POSTBODY ' \{{
+^ExecuteIfIsNotNull("\"customerId\" : \"",@CID,"\",","\"customerId\" : null,")
+^ExecuteIfIsNotNull("\"employeeId\" : \"",@EID,"\",","\"employeeId\" : null,")
+^ExecuteIfIsNotNull("\"productId\" : \"",@PID,"\"","\"productId\" : null")
+\}}'
+    MIME 'application/json'
+    HEADERS (
+        'accept'='application/json'
+    )
+    AUTHENTICATION BASIC ( 
+      USER '${databases.labs_db_basics.folder.data_sources.datasources.json.ds_sales_search.ROUTE.HTTP.USER}'
+      PASSWORD '${databases.labs_db_basics.folder.data_sources.datasources.json.ds_sales_search.ROUTE.HTTP.PASSWORD}' ${databases.labs_db_basics.folder.data_sources.datasources.json.ds_sales_search.ROUTE.HTTP.PASSWORD.ENCRYPTED} )
+    PROXY OFF;
+

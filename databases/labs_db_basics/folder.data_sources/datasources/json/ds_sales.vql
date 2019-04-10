@@ -1,0 +1,13 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JSON ds_sales
+    FOLDER = '/data_sources'
+    ROUTE HTTP 'http.CommonsHttpClientConnection,120000' GET '${databases.labs_db_basics.folder.data_sources.datasources.json.ds_sales.ROUTE.HTTP.URL}'
+    HEADERS (
+        'content-type'='application/json', 
+        'accept'='application/json'
+    )
+    AUTHENTICATION BASIC ( 
+      USER '${databases.labs_db_basics.folder.data_sources.datasources.json.ds_sales.ROUTE.HTTP.USER}'
+      PASSWORD '${databases.labs_db_basics.folder.data_sources.datasources.json.ds_sales.ROUTE.HTTP.PASSWORD}' ${databases.labs_db_basics.folder.data_sources.datasources.json.ds_sales.ROUTE.HTTP.PASSWORD.ENCRYPTED} )
+    PROXY OFF;
+

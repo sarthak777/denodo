@@ -1,0 +1,36 @@
+﻿CREATE OR REPLACE WRAPPER JDBC bv_hr_countries
+    FOLDER = '/base_views'
+    DATASOURCENAME=ds_human_resources
+    RELATIONNAME='COUNTRIES' 
+    OUTPUTSCHEMA (
+        country_id = 'COUNTRY_ID' :'java.lang.String' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='12', sourcetypename='CHAR(2)')  NOT NULL SORTABLE,
+        country_name = 'COUNTRY_NAME' :'java.lang.String' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='12', sourcetypename='VARCHAR2(40)')  NOT SORTABLE,
+        region_id = 'REGION_ID' :'java.lang.Double' (OPT) (sourcetypedecimals='10', sourcetyperadix='10', sourcetypesize='2000000000', sourcetypeid='6', sourcetypename='NUMBER')  NOT SORTABLE
+    )
+    CONSTRAINT 'COUNTRY_C_ID_PK' PRIMARY KEY ( 'COUNTRY_ID' )
+    CONSTRAINT 'COUNTR_REG_FK' FOREIGN KEY ( 'REGION_ID' ) 
+    REFERENCES 'REGIONS'( 'REGION_ID' )  ON UPDATE NO ACTION  ON DELETE NO ACTION INITIALLY DEFERRED 
+    INDEX 'sqlite_autoindex_COUNTRIES_1' OTHER UNIQUE PRIMARY ( 'COUNTRY_ID' );
+
+CREATE OR REPLACE TABLE bv_hr_countries I18N au_cst (
+        country_id:text (sourcetypedecimals = '10', sourcetyperadix = '10', sourcetypesize = '2000000000', sourcetypeid = '1'), 
+        country_name:text (sourcetypedecimals = '10', sourcetyperadix = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        region_id:double (sourcetypedecimals = '10', sourcetyperadix = '10', sourcetypesize = '2000000000', sourcetypeid = '6')
+    )
+    FOLDER = '/base_views'
+    PRIMARY KEY ( 'country_id' )
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE 10
+    ADD SEARCHMETHOD bv_hr_countries(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD country_id (any) OPT ANY
+             ADD country_name (any) OPT ANY
+             ADD region_id (any) OPT ANY
+        )
+        OUTPUTLIST (country_id, country_name, region_id
+        )
+        WRAPPER (jdbc bv_hr_countries)
+    );
+

@@ -1,0 +1,35 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JDBC ds_human_resources
+    FOLDER = '/data_sources'
+    DRIVERCLASSNAME = 'org.sqlite.JDBC'
+    DATABASEURI = '${databases.labs_db_basics.folder.data_sources.datasources.jdbc.ds_human_resources.DATABASEURI}'
+    USERNAME = '${databases.labs_db_basics.folder.data_sources.datasources.jdbc.ds_human_resources.USERNAME}'
+    USERPASSWORD = ''
+    CLASSPATH = 'C:\Users\Sarthak Garg\Desktop\Denodo studymaterial\labs dv basic\sqlite-jdbc-3.23.1.jar'
+    DATABASENAME = 'Generic'
+    DATABASEVERSION = ''
+    FETCHSIZE = 1000
+    VALIDATIONQUERY = ''
+    INITIALSIZE = 4
+    MAXIDLE = -1
+    MINIDLE = 0
+    MAXACTIVE = 20
+    EXHAUSTEDACTION = 1
+    TESTONBORROW = true
+    TESTONRETURN = false
+    TESTWHILEIDLE = false
+    TIMEBETWEENEVICTION = -1
+    NUMTESTPEREVICTION = 3
+    MINEVICTABLETIME = 1800000
+    POOLPREPAREDSTATEMENTS = false
+    MAXSLEEPINGPS = 4
+    INITIALCAPACITYPS = 8
+    DATA_LOAD_CONFIGURATION (
+        BATCHINSERTSIZE = 200
+    )
+    SOURCECONFIGURATION (
+        delegateprojectsubquery = false,
+        delegateaggregatefunctionslist = (avg, count, max, min, sum),
+        delegatescalarfunctionslist = (abs, ceil, coalesce, concat, div, floor, getday, gethour, getminute, getmonth, getsecond, getyear, len, log, lower, mod, mult, now, nullif, pow, power, replace, round, sqrt, subtract, sum, textcat, textconstant, trim, upper)
+    );
+

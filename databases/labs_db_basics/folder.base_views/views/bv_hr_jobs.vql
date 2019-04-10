@@ -1,0 +1,36 @@
+﻿CREATE OR REPLACE WRAPPER JDBC jobs
+    FOLDER = '/base_views'
+    DATASOURCENAME=ds_human_resources
+    RELATIONNAME='JOBS' 
+    OUTPUTSCHEMA (
+        job_id = 'JOB_ID' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(10)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        job_title = 'JOB_TITLE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(35)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        min_salary = 'MIN_SALARY' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER(6)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        max_salary = 'MAX_SALARY' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER(6)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE
+    )
+    CONSTRAINT 'JOB_ID_PK' PRIMARY KEY ( 'JOB_ID' )
+    INDEX 'sqlite_autoindex_JOBS_1' OTHER UNIQUE PRIMARY ( 'JOB_ID' );
+
+CREATE OR REPLACE TABLE bv_hr_jobs I18N au_cst (
+        job_id:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        job_title:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        min_salary:double (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '6'), 
+        max_salary:double (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '6')
+    )
+    FOLDER = '/base_views'
+    CONSTRAINT 'JOB_ID_PK' PRIMARY KEY ( 'job_id' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD jobs(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD job_id (any) OPT ANY
+             ADD job_title (any) OPT ANY
+             ADD min_salary (any) OPT ANY
+             ADD max_salary (any) OPT ANY
+        )
+        OUTPUTLIST (job_id, job_title, max_salary, min_salary
+        )
+        WRAPPER (jdbc jobs)
+    );
+

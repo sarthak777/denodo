@@ -1,0 +1,44 @@
+﻿CREATE OR REPLACE WRAPPER JDBC locations
+    FOLDER = '/base_views'
+    DATASOURCENAME=ds_human_resources
+    RELATIONNAME='LOCATIONS' 
+    OUTPUTSCHEMA (
+        location_id = 'LOCATION_ID' :'java.lang.Double' (OPT) (sourcetyperadix='10', sourcetypename='NUMBER(4)', sourcetypeid='6', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        street_address = 'STREET_ADDRESS' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(40)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        postal_code = 'POSTAL_CODE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(12)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        city = 'CITY' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(30)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT NULL NOT SORTABLE,
+        state_province = 'STATE_PROVINCE' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='VARCHAR2(25)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE,
+        country_id = 'COUNTRY_ID' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypename='CHAR(2)', sourcetypeid='12', sourcetypedecimals='10', sourcetypesize='2000000000')  NOT SORTABLE
+    )
+    CONSTRAINT 'LOC_ID_PK' PRIMARY KEY ( 'LOCATION_ID' )
+    CONSTRAINT 'LOC_C_ID_FK' FOREIGN KEY ( 'COUNTRY_ID' ) 
+    REFERENCES 'COUNTRIES'( 'COUNTRY_ID' )  ON UPDATE NO ACTION  ON DELETE NO ACTION INITIALLY DEFERRED 
+    INDEX 'sqlite_autoindex_LOCATIONS_1' OTHER UNIQUE PRIMARY ( 'LOCATION_ID' );
+
+CREATE OR REPLACE TABLE bv_hr_locations I18N au_cst (
+        location_id:double (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '6'), 
+        street_address:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        postal_code:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        city:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        state_province:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12'), 
+        country_id:text (sourcetyperadix = '10', sourcetypedecimals = '10', sourcetypesize = '2000000000', sourcetypeid = '12')
+    )
+    FOLDER = '/base_views'
+    CONSTRAINT 'LOC_ID_PK' PRIMARY KEY ( 'location_id' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD locations(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD location_id (any) OPT ANY
+             ADD street_address (any) OPT ANY
+             ADD postal_code (any) OPT ANY
+             ADD city (any) OPT ANY
+             ADD state_province (any) OPT ANY
+             ADD country_id (any) OPT ANY
+        )
+        OUTPUTLIST (city, country_id, location_id, postal_code, state_province, street_address
+        )
+        WRAPPER (jdbc locations)
+    );
+

@@ -1,0 +1,194 @@
+﻿CREATE OR REPLACE WRAPPER DF bv_sf_contact
+    FOLDER = '/base_views'
+    DATASOURCENAME=ds_salesforce_contact
+    OUTPUTSCHEMA (
+        id = 'id' (OPT),
+        isdeleted = 'isdeleted' (OPT),
+        masterrecordid = 'masterrecordid' (OPT),
+        accountid = 'accountid' (OPT),
+        lastname = 'lastname' (OPT),
+        firstname = 'firstname' (OPT),
+        salutation = 'salutation' (OPT),
+        name = 'name' (OPT),
+        otherstreet = 'otherstreet' (OPT),
+        othercity = 'othercity' (OPT),
+        otherstate = 'otherstate' (OPT),
+        otherpostalcode = 'otherpostalcode' (OPT),
+        othercountry = 'othercountry' (OPT),
+        otherlatitude = 'otherlatitude' (OPT),
+        otherlongitude = 'otherlongitude' (OPT),
+        otheraddress = 'otheraddress' (OPT),
+        mailingstreet = 'mailingstreet' (OPT),
+        mailingcity = 'mailingcity' (OPT),
+        mailingstate = 'mailingstate' (OPT),
+        mailingpostalcode = 'mailingpostalcode' (OPT),
+        mailingcountry = 'mailingcountry' (OPT),
+        mailinglatitude = 'mailinglatitude' (OPT),
+        mailinglongitude = 'mailinglongitude' (OPT),
+        mailingaddress = 'mailingaddress' (OPT),
+        phone = 'phone' (OPT),
+        fax = 'fax' (OPT),
+        mobilephone = 'mobilephone' (OPT),
+        homephone = 'homephone' (OPT),
+        otherphone = 'otherphone' (OPT),
+        assistantphone = 'assistantphone' (OPT),
+        reportstoid = 'reportstoid' (OPT),
+        email = 'email' (OPT),
+        title = 'title' (OPT),
+        department = 'department' (OPT),
+        assistantname = 'assistantname' (OPT),
+        leadsource = 'leadsource' (OPT),
+        birthdate = 'birthdate' (OPT),
+        description = 'description' (OPT),
+        ownerid = 'ownerid' (OPT),
+        createddate = 'createddate' (OPT),
+        createdbyid = 'createdbyid' (OPT),
+        lastmodifieddate = 'lastmodifieddate' (OPT),
+        lastmodifiedbyid = 'lastmodifiedbyid' (OPT),
+        systemmodstamp = 'systemmodstamp' (OPT),
+        lastactivitydate = 'lastactivitydate' (OPT),
+        lastcurequestdate = 'lastcurequestdate' (OPT),
+        lastcuupdatedate = 'lastcuupdatedate' (OPT),
+        lastvieweddate = 'lastvieweddate' (OPT),
+        lastreferenceddate = 'lastreferenceddate' (OPT),
+        emailbouncedreason = 'emailbouncedreason' (OPT),
+        emailbounceddate = 'emailbounceddate' (OPT),
+        isemailbounced = 'isemailbounced' (OPT),
+        photourl = 'photourl' (OPT),
+        jigsaw = 'jigsaw' (OPT),
+        jigsawcontactid = 'jigsawcontactid' (OPT),
+        cleanstatus = 'cleanstatus' (OPT),
+        level__c = 'level__c' (OPT),
+        languages__c = 'languages__c' (OPT)
+    );
+
+CREATE OR REPLACE TABLE bv_sf_contact I18N au_cst (
+        id:text, 
+        isdeleted:text, 
+        masterrecordid:text, 
+        accountid:text, 
+        lastname:text, 
+        firstname:text, 
+        salutation:text, 
+        name:text, 
+        otherstreet:text, 
+        othercity:text, 
+        otherstate:text, 
+        otherpostalcode:text, 
+        othercountry:text, 
+        otherlatitude:text, 
+        otherlongitude:text, 
+        otheraddress:text, 
+        mailingstreet:text, 
+        mailingcity:text, 
+        mailingstate:text, 
+        mailingpostalcode:text, 
+        mailingcountry:text, 
+        mailinglatitude:text, 
+        mailinglongitude:text, 
+        mailingaddress:text, 
+        phone:text, 
+        fax:text, 
+        mobilephone:text, 
+        homephone:text, 
+        otherphone:text, 
+        assistantphone:text, 
+        reportstoid:text, 
+        email:text, 
+        title:text, 
+        department:text, 
+        assistantname:text, 
+        leadsource:text, 
+        birthdate:text, 
+        description:text, 
+        ownerid:text, 
+        createddate:text, 
+        createdbyid:text, 
+        lastmodifieddate:text, 
+        lastmodifiedbyid:text, 
+        systemmodstamp:text, 
+        lastactivitydate:text, 
+        lastcurequestdate:text, 
+        lastcuupdatedate:text, 
+        lastvieweddate:text, 
+        lastreferenceddate:text, 
+        emailbouncedreason:text, 
+        emailbounceddate:text, 
+        isemailbounced:text, 
+        photourl:text, 
+        jigsaw:text, 
+        jigsawcontactid:text, 
+        cleanstatus:text, 
+        level__c:text, 
+        languages__c:text
+    )
+    FOLDER = '/base_views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_sf_contact(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD id (=,in) OPT ANY
+             ADD isdeleted (=,in) OPT ANY
+             ADD masterrecordid (=,in) OPT ANY
+             ADD accountid (=,in) OPT ANY
+             ADD lastname (=,in) OPT ANY
+             ADD firstname (=,in) OPT ANY
+             ADD salutation (=,in) OPT ANY
+             ADD name (=,in) OPT ANY
+             ADD otherstreet (=,in) OPT ANY
+             ADD othercity (=,in) OPT ANY
+             ADD otherstate (=,in) OPT ANY
+             ADD otherpostalcode (=,in) OPT ANY
+             ADD othercountry (=,in) OPT ANY
+             ADD otherlatitude (=,in) OPT ANY
+             ADD otherlongitude (=,in) OPT ANY
+             ADD otheraddress (=,in) OPT ANY
+             ADD mailingstreet (=,in) OPT ANY
+             ADD mailingcity (=,in) OPT ANY
+             ADD mailingstate (=,in) OPT ANY
+             ADD mailingpostalcode (=,in) OPT ANY
+             ADD mailingcountry (=,in) OPT ANY
+             ADD mailinglatitude (=,in) OPT ANY
+             ADD mailinglongitude (=,in) OPT ANY
+             ADD mailingaddress (=,in) OPT ANY
+             ADD phone (=,in) OPT ANY
+             ADD fax (=,in) OPT ANY
+             ADD mobilephone (=,in) OPT ANY
+             ADD homephone (=,in) OPT ANY
+             ADD otherphone (=,in) OPT ANY
+             ADD assistantphone (=,in) OPT ANY
+             ADD reportstoid (=,in) OPT ANY
+             ADD email (=,in) OPT ANY
+             ADD title (=,in) OPT ANY
+             ADD department (=,in) OPT ANY
+             ADD assistantname (=,in) OPT ANY
+             ADD leadsource (=,in) OPT ANY
+             ADD birthdate (=,in) OPT ANY
+             ADD description (=,in) OPT ANY
+             ADD ownerid (=,in) OPT ANY
+             ADD createddate (=,in) OPT ANY
+             ADD createdbyid (=,in) OPT ANY
+             ADD lastmodifieddate (=,in) OPT ANY
+             ADD lastmodifiedbyid (=,in) OPT ANY
+             ADD systemmodstamp (=,in) OPT ANY
+             ADD lastactivitydate (=,in) OPT ANY
+             ADD lastcurequestdate (=,in) OPT ANY
+             ADD lastcuupdatedate (=,in) OPT ANY
+             ADD lastvieweddate (=,in) OPT ANY
+             ADD lastreferenceddate (=,in) OPT ANY
+             ADD emailbouncedreason (=,in) OPT ANY
+             ADD emailbounceddate (=,in) OPT ANY
+             ADD isemailbounced (=,in) OPT ANY
+             ADD photourl (=,in) OPT ANY
+             ADD jigsaw (=,in) OPT ANY
+             ADD jigsawcontactid (=,in) OPT ANY
+             ADD cleanstatus (=,in) OPT ANY
+             ADD level__c (=,in) OPT ANY
+             ADD languages__c (=,in) OPT ANY
+        )
+        OUTPUTLIST (accountid, assistantname, assistantphone, birthdate, cleanstatus, createdbyid, createddate, department, description, email, emailbounceddate, emailbouncedreason, fax, firstname, homephone, id, isdeleted, isemailbounced, jigsaw, jigsawcontactid, languages__c, lastactivitydate, lastcurequestdate, lastcuupdatedate, lastmodifiedbyid, lastmodifieddate, lastname, lastreferenceddate, lastvieweddate, leadsource, level__c, mailingaddress, mailingcity, mailingcountry, mailinglatitude, mailinglongitude, mailingpostalcode, mailingstate, mailingstreet, masterrecordid, mobilephone, name, otheraddress, othercity, othercountry, otherlatitude, otherlongitude, otherphone, otherpostalcode, otherstate, otherstreet, ownerid, phone, photourl, reportstoid, salutation, systemmodstamp, title
+        )
+        WRAPPER (df bv_sf_contact)
+    );
+

@@ -1,0 +1,210 @@
+﻿CREATE OR REPLACE WRAPPER DF bv_sf_account
+    FOLDER = '/base_views'
+    DATASOURCENAME=ds_salesforce_account
+    OUTPUTSCHEMA (
+        id = 'id' (OPT),
+        isdeleted = 'isdeleted' (OPT),
+        masterrecordid = 'masterrecordid' (OPT),
+        name = 'name' (OPT),
+        type = 'type' (OPT),
+        parentid = 'parentid' (OPT),
+        billingstreet = 'billingstreet' (OPT),
+        billingcity = 'billingcity' (OPT),
+        billingstate = 'billingstate' (OPT),
+        billingpostalcode = 'billingpostalcode' (OPT),
+        billingcountry = 'billingcountry' (OPT),
+        billinglatitude = 'billinglatitude' (OPT),
+        billinglongitude = 'billinglongitude' (OPT),
+        billingaddress = 'billingaddress' (OPT),
+        shippingstreet = 'shippingstreet' (OPT),
+        shippingcity = 'shippingcity' (OPT),
+        shippingstate = 'shippingstate' (OPT),
+        shippingpostalcode = 'shippingpostalcode' (OPT),
+        shippingcountry = 'shippingcountry' (OPT),
+        shippinglatitude = 'shippinglatitude' (OPT),
+        shippinglongitude = 'shippinglongitude' (OPT),
+        shippingaddress = 'shippingaddress' (OPT),
+        phone = 'phone' (OPT),
+        fax = 'fax' (OPT),
+        accountnumber = 'accountnumber' (OPT),
+        website = 'website' (OPT),
+        photourl = 'photourl' (OPT),
+        sic = 'sic' (OPT),
+        industry = 'industry' (OPT),
+        annualrevenue = 'annualrevenue' (OPT),
+        numberofemployees = 'numberofemployees' (OPT),
+        ownership = 'ownership' (OPT),
+        tickersymbol = 'tickersymbol' (OPT),
+        description = 'description' (OPT),
+        rating = 'rating' (OPT),
+        site = 'site' (OPT),
+        ownerid = 'ownerid' (OPT),
+        createddate = 'createddate' (OPT),
+        createdbyid = 'createdbyid' (OPT),
+        lastmodifieddate = 'lastmodifieddate' (OPT),
+        lastmodifiedbyid = 'lastmodifiedbyid' (OPT),
+        systemmodstamp = 'systemmodstamp' (OPT),
+        lastactivitydate = 'lastactivitydate' (OPT),
+        lastvieweddate = 'lastvieweddate' (OPT),
+        lastreferenceddate = 'lastreferenceddate' (OPT),
+        jigsaw = 'jigsaw' (OPT),
+        jigsawcompanyid = 'jigsawcompanyid' (OPT),
+        cleanstatus = 'cleanstatus' (OPT),
+        accountsource = 'accountsource' (OPT),
+        dunsnumber = 'dunsnumber' (OPT),
+        tradestyle = 'tradestyle' (OPT),
+        naicscode = 'naicscode' (OPT),
+        naicsdesc = 'naicsdesc' (OPT),
+        yearstarted = 'yearstarted' (OPT),
+        sicdesc = 'sicdesc' (OPT),
+        dandbcompanyid = 'dandbcompanyid' (OPT),
+        customerpriority__c = 'customerpriority__c' (OPT),
+        sla__c = 'sla__c' (OPT),
+        active__c = 'active__c' (OPT),
+        numberoflocations__c = 'numberoflocations__c' (OPT),
+        upsellopportunity__c = 'upsellopportunity__c' (OPT),
+        slaserialnumber__c = 'slaserialnumber__c' (OPT),
+        slaexpirationdate__c = 'slaexpirationdate__c' (OPT)
+    );
+
+CREATE OR REPLACE TABLE bv_sf_account I18N au_cst (
+        id:text, 
+        isdeleted:text, 
+        masterrecordid:text, 
+        name:text, 
+        type:text, 
+        parentid:text, 
+        billingstreet:text, 
+        billingcity:text, 
+        billingstate:text, 
+        billingpostalcode:text, 
+        billingcountry:text, 
+        billinglatitude:text, 
+        billinglongitude:text, 
+        billingaddress:text, 
+        shippingstreet:text, 
+        shippingcity:text, 
+        shippingstate:text, 
+        shippingpostalcode:text, 
+        shippingcountry:text, 
+        shippinglatitude:text, 
+        shippinglongitude:text, 
+        shippingaddress:text, 
+        phone:text, 
+        fax:text, 
+        accountnumber:text, 
+        website:text, 
+        photourl:text, 
+        sic:text, 
+        industry:text, 
+        annualrevenue:text, 
+        numberofemployees:text, 
+        ownership:text, 
+        tickersymbol:text, 
+        description:text, 
+        rating:text, 
+        site:text, 
+        ownerid:text, 
+        createddate:text, 
+        createdbyid:text, 
+        lastmodifieddate:text, 
+        lastmodifiedbyid:text, 
+        systemmodstamp:text, 
+        lastactivitydate:text, 
+        lastvieweddate:text, 
+        lastreferenceddate:text, 
+        jigsaw:text, 
+        jigsawcompanyid:text, 
+        cleanstatus:text, 
+        accountsource:text, 
+        dunsnumber:text, 
+        tradestyle:text, 
+        naicscode:text, 
+        naicsdesc:text, 
+        yearstarted:text, 
+        sicdesc:text, 
+        dandbcompanyid:text, 
+        customerpriority__c:text, 
+        sla__c:text, 
+        active__c:text, 
+        numberoflocations__c:text, 
+        upsellopportunity__c:text, 
+        slaserialnumber__c:text, 
+        slaexpirationdate__c:text
+    )
+    FOLDER = '/base_views'
+    CACHE FULL
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_sf_account(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD id (=,in) OPT ANY
+             ADD isdeleted (=,in) OPT ANY
+             ADD masterrecordid (=,in) OPT ANY
+             ADD name (=,in) OPT ANY
+             ADD type (=,in) OPT ANY
+             ADD parentid (=,in) OPT ANY
+             ADD billingstreet (=,in) OPT ANY
+             ADD billingcity (=,in) OPT ANY
+             ADD billingstate (=,in) OPT ANY
+             ADD billingpostalcode (=,in) OPT ANY
+             ADD billingcountry (=,in) OPT ANY
+             ADD billinglatitude (=,in) OPT ANY
+             ADD billinglongitude (=,in) OPT ANY
+             ADD billingaddress (=,in) OPT ANY
+             ADD shippingstreet (=,in) OPT ANY
+             ADD shippingcity (=,in) OPT ANY
+             ADD shippingstate (=,in) OPT ANY
+             ADD shippingpostalcode (=,in) OPT ANY
+             ADD shippingcountry (=,in) OPT ANY
+             ADD shippinglatitude (=,in) OPT ANY
+             ADD shippinglongitude (=,in) OPT ANY
+             ADD shippingaddress (=,in) OPT ANY
+             ADD phone (=,in) OPT ANY
+             ADD fax (=,in) OPT ANY
+             ADD accountnumber (=,in) OPT ANY
+             ADD website (=,in) OPT ANY
+             ADD photourl (=,in) OPT ANY
+             ADD sic (=,in) OPT ANY
+             ADD industry (=,in) OPT ANY
+             ADD annualrevenue (=,in) OPT ANY
+             ADD numberofemployees (=,in) OPT ANY
+             ADD ownership (=,in) OPT ANY
+             ADD tickersymbol (=,in) OPT ANY
+             ADD description (=,in) OPT ANY
+             ADD rating (=,in) OPT ANY
+             ADD site (=,in) OPT ANY
+             ADD ownerid (=,in) OPT ANY
+             ADD createddate (=,in) OPT ANY
+             ADD createdbyid (=,in) OPT ANY
+             ADD lastmodifieddate (=,in) OPT ANY
+             ADD lastmodifiedbyid (=,in) OPT ANY
+             ADD systemmodstamp (=,in) OPT ANY
+             ADD lastactivitydate (=,in) OPT ANY
+             ADD lastvieweddate (=,in) OPT ANY
+             ADD lastreferenceddate (=,in) OPT ANY
+             ADD jigsaw (=,in) OPT ANY
+             ADD jigsawcompanyid (=,in) OPT ANY
+             ADD cleanstatus (=,in) OPT ANY
+             ADD accountsource (=,in) OPT ANY
+             ADD dunsnumber (=,in) OPT ANY
+             ADD tradestyle (=,in) OPT ANY
+             ADD naicscode (=,in) OPT ANY
+             ADD naicsdesc (=,in) OPT ANY
+             ADD yearstarted (=,in) OPT ANY
+             ADD sicdesc (=,in) OPT ANY
+             ADD dandbcompanyid (=,in) OPT ANY
+             ADD customerpriority__c (=,in) OPT ANY
+             ADD sla__c (=,in) OPT ANY
+             ADD active__c (=,in) OPT ANY
+             ADD numberoflocations__c (=,in) OPT ANY
+             ADD upsellopportunity__c (=,in) OPT ANY
+             ADD slaserialnumber__c (=,in) OPT ANY
+             ADD slaexpirationdate__c (=,in) OPT ANY
+        )
+        OUTPUTLIST (accountnumber, accountsource, active__c, annualrevenue, billingaddress, billingcity, billingcountry, billinglatitude, billinglongitude, billingpostalcode, billingstate, billingstreet, cleanstatus, createdbyid, createddate, customerpriority__c, dandbcompanyid, description, dunsnumber, fax, id, industry, isdeleted, jigsaw, jigsawcompanyid, lastactivitydate, lastmodifiedbyid, lastmodifieddate, lastreferenceddate, lastvieweddate, masterrecordid, naicscode, naicsdesc, name, numberofemployees, numberoflocations__c, ownerid, ownership, parentid, phone, photourl, rating, shippingaddress, shippingcity, shippingcountry, shippinglatitude, shippinglongitude, shippingpostalcode, shippingstate, shippingstreet, sic, sicdesc, site, sla__c, slaexpirationdate__c, slaserialnumber__c, systemmodstamp, tickersymbol, tradestyle, type, upsellopportunity__c, website, yearstarted
+        )
+        WRAPPER (df bv_sf_account)
+    );
+

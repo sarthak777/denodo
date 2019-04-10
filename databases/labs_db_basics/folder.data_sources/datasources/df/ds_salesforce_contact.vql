@@ -1,0 +1,8 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE DF ds_salesforce_contact
+    FOLDER = '/data_sources'
+    ROUTE LOCAL 'LocalConnection' '${databases.labs_db_basics.folder.data_sources.datasources.df.ds_salesforce_contact.ROUTE.LOCAL.PATH}'
+    COLUMNDELIMITER = ','
+    ENDOFLINEDELIMITER = '\n'
+    HEADER = TRUE;
+
