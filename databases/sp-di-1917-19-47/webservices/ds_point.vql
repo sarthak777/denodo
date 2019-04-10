@@ -11,7 +11,7 @@
     SUPPORTEDREPRESENTATIONS (HTML, XML, JSON)
     RESOURCES (
         VIEW ds_point FIELDS (
-            field1 : 'text'
+            field2 : 'text'
         )
     )
     OPTIONS ( NULLVALUESASEMPTYXMLELEMENTS = false
