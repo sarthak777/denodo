@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_intractions_customer FOLDER = '/derived_views' AS SELECT dv_interactions.customer_code AS customer_code, nest(dv_interactions.agent_id, dv_interactions.interaction_date, dv_interactions.case_id, dv_interactions.interaction_phone, dv_interactions.interaction_ip) AS intractions FROM denodo_training.dv_interactions AS dv_interactions INNER JOIN dv_product_storage AS dv_product_storage ON dv_interactions.agent_id = dv_product_storage.id  GROUP BY dv_interactions.customer_code;
+
+ALTER VIEW dv_intractions_customer
+ LAYOUT (dv_interactions = [150, 120, 200, 146], dv_product_storage = [470, 110, 200, 126]);
+

@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_employees_income_not_flatten FOLDER = '/derived_views' AS SELECT bv_hr_employees.employee_id AS employee_id, bv_hr_employees.first_name AS first_name, bv_hr_employees.last_name AS last_name, bv_hr_employees.email AS email, bv_hr_employees.phone_number AS phone_number, bv_hr_employees.hire_date AS hire_date, bv_hr_employees.job_id AS job_id, bv_hr_employees.salary AS salary, bv_hr_employees.commission_pct AS commission_pct, bv_hr_employees.manager_id AS manager_id, bv_hr_employees.department_id AS department_id, bv_hr_jobs.job_title AS job_title, bv_hr_jobs.min_salary AS min_salary, bv_hr_jobs.max_salary AS max_salary, ((bv_hr_employees.salary*bv_hr_employees.commission_pct)+bv_hr_employees.salary) AS income FROM bv_hr_employees AS bv_hr_employees INNER JOIN bv_hr_jobs AS bv_hr_jobs ON bv_hr_employees.job_id = bv_hr_jobs.job_id ;
+
+ALTER VIEW dv_employees_income_not_flatten
+ LAYOUT (bv_hr_employees = [150, 70, 310, 246], bv_hr_jobs = [790, 80, 280, 106]);
+

@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_product_details_array FOLDER = '/derived_views' AS SELECT (denodo_training.bv_product_details.return).product.code AS code, (denodo_training.bv_product_details.return).product.description AS description, (denodo_training.bv_product_details.return).product.warnings AS warnings, (denodo_training.bv_product_details.return).product.numresults AS numresults, (denodo_training.bv_product_details.return).product.productdetails AS productdetails FROM denodo_training.bv_product_details;
+
+ALTER VIEW dv_product_details_array
+ LAYOUT (bv_product_details = [20, 20, 250, 46]);
+

@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_product_storage FOLDER = '/derived_views' AS SELECT bv_product.productid AS productid, bv_product.productname AS productname, bv_wo_storages.id AS id, bv_wo_storages.city AS city, count(*) AS amount FROM (denodo_training.bv_product AS bv_product INNER JOIN denodo_training.bv_wo_stock AS bv_wo_stock ON bv_product.productid = bv_wo_stock.product_id ) INNER JOIN denodo_training.bv_wo_storages AS bv_wo_storages ON bv_wo_stock.storage_id = bv_wo_storages.id  GROUP BY bv_product.productid, bv_product.productname, bv_wo_storages.id, bv_wo_storages.city;
+
+ALTER VIEW dv_product_storage
+ LAYOUT (bv_product = [269, 192, 200, 225], bv_wo_stock = [660, 100, 200, 106], bv_wo_storages = [989, 191, 200, 186]);
+

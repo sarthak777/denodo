@@ -1,0 +1,9 @@
+﻿CREATE OR REPLACE VIEW dv_employees_income FOLDER = '/derived_views' AS SELECT dv_employees_income_not_flatten.employee_id AS employee_id, dv_employees_income_not_flatten.first_name AS first_name, dv_employees_income_not_flatten.last_name AS last_name, dv_employees_income_not_flatten.email AS email, dv_employees_income_not_flatten.phone_number AS phone_number, dv_employees_income_not_flatten.hire_date AS hire_date, dv_employees_income_not_flatten.job_id AS job_id, dv_employees_income_not_flatten.salary AS salary, dv_employees_income_not_flatten.commission_pct AS commission_pct, dv_employees_income_not_flatten.manager_id AS manager_id, dv_employees_income_not_flatten.department_id AS department_id, dv_employees_income_not_flatten.job_title AS job_title, dv_employees_income_not_flatten.min_salary AS min_salary, dv_employees_income_not_flatten.max_salary AS max_salary, dv_employees_income_not_flatten.income AS income, min(dv_employees_income_not_flatten.max_salary, dv_employees_income_not_flatten.income) AS "final_salary ", formatdate('yyyy-MM-dd   HH:mm:dd', current_date()) AS seniority FROM dv_employees_income_not_flatten;
+
+ALTER VIEW dv_employees_income
+ LAYOUT (dv_employees_income_not_flatten = [20, 20, 203, 326]);
+
+ALTER VIEW dv_employees_income
+ CACHE FULL
+     BATCHSIZEINCACHE DEFAULT TIMETOLIVEINCACHE DEFAULT;
+

@@ -1,0 +1,2 @@
+﻿CREATE OR REPLACE VIEW dv_test FOLDER = '/derived_views' AS SELECT 'test1' AS test_text, current_date() AS today FROM dual();
+

@@ -1,0 +1,9 @@
+﻿CREATE OR REPLACE VIEW dv_invoices FOLDER = '/derived_views' AS SELECT country AS country, sum(amount) AS t_amount FROM bv_invoices GROUP BY country;
+
+ALTER VIEW dv_invoices
+ LAYOUT (bv_invoices = [20, 20, 200, 306]);
+
+ALTER VIEW dv_invoices
+ CACHE FULL
+     BATCHSIZEINCACHE DEFAULT TIMETOLIVEINCACHE DEFAULT;
+

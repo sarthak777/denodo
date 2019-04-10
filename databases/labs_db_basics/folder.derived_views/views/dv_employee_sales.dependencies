@@ -1,0 +1,5 @@
+﻿/databases/labs_db_basics/folder.derived_views/derived_views.vql
+/databases/labs_db_basics/folder.base_views/base_views.vql
+/databases/labs_db_basics/folder.data_sources/data_sources.vql
+/databases/labs_db_basics/folder.data_sources/datasources/json/ds_sales.vql
+/databases/labs_db_basics/folder.base_views/views/bv_sales_all.vql
