@@ -1,0 +1,29 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JDBC zz_test
+    DRIVERCLASSNAME = 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
+    DATABASEURI = '${databases.admin.datasources.jdbc.zz_test.DATABASEURI}'
+    USERNAME = '${databases.admin.datasources.jdbc.zz_test.USERNAME}'
+    USERPASSWORD = '${databases.admin.datasources.jdbc.zz_test.USERPASSWORD}' ${databases.admin.datasources.jdbc.zz_test.USERPASSWORD.ENCRYPTED}
+    CLASSPATH = 'mssql-jdbc-6.x'
+    DATABASENAME = 'sqlserver'
+    DATABASEVERSION = '2016'
+    FETCHSIZE = 1000
+    VALIDATIONQUERY = 'Select 1'
+    INITIALSIZE = 4
+    MAXIDLE = -1
+    MINIDLE = 0
+    MAXACTIVE = 20
+    EXHAUSTEDACTION = 1
+    TESTONBORROW = true
+    TESTONRETURN = false
+    TESTWHILEIDLE = false
+    TIMEBETWEENEVICTION = -1
+    NUMTESTPEREVICTION = 3
+    MINEVICTABLETIME = 1800000
+    POOLPREPAREDSTATEMENTS = false
+    MAXSLEEPINGPS = 4
+    INITIALCAPACITYPS = 8
+    DATA_LOAD_CONFIGURATION (
+        BATCHINSERTSIZE = 1000
+    );
+
