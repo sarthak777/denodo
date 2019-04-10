@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW p_bv_product FOLDER = '/data_sources' AS SELECT denodo_training.bv_product.code AS code, denodo_training.bv_product.description AS description, denodo_training.bv_product.warnings AS warnings, denodo_training.bv_product.numresults AS numresults, denodo_training.bv_product.productid AS productid, denodo_training.bv_product.productname AS productname, denodo_training.bv_product.productprice AS productprice, denodo_training.bv_product.category AS category, denodo_training.bv_product.characteristics AS characteristics, denodo_training.bv_product.accessories AS accessories FROM denodo_training.bv_product;
+
+ALTER VIEW p_bv_product
+ LAYOUT (bv_product = [20, 20, 319, 226]);
+
