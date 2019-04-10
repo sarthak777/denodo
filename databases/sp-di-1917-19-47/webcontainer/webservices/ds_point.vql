@@ -1,0 +1,5 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+UNDEPLOY IF EXISTS WEBSERVICE ds_point;
+
+DEPLOY WEBSERVICE ds_point LOGIN = '${databases.sp-di-1917-19-47.webcontainer.webservices.ds_point.LOGIN}' PASSWORD = '${databases.sp-di-1917-19-47.webcontainer.webservices.ds_point.PASSWORD}' ${databases.sp-di-1917-19-47.webcontainer.webservices.ds_point.PASSWORD.ENCRYPTED};
+

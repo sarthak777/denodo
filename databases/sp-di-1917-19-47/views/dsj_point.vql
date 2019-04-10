@@ -1,0 +1,26 @@
+﻿CREATE OR REPLACE WRAPPER JSON dsj_point
+    DATASOURCENAME=ds_point
+    TUPLEROOT '/JSONFile/elements'
+    OUTPUTSCHEMA ("JSONFile" = 'JSONFile' : REGISTER OF (
+        name = 'name' : 'java.lang.String',
+        field1 = 'JSONFile.elements.field1' : 'java.lang.String'
+    )
+    );
+
+CREATE OR REPLACE TABLE dsj_point I18N au_cst (
+        name:text, 
+        field1:text
+    )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD dsj_point(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD name NOS ZERO ()
+             ADD field1 NOS ZERO ()
+        )
+        OUTPUTLIST (field1, name
+        )
+        WRAPPER (json dsj_point)
+    );
+

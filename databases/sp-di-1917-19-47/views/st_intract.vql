@@ -1,0 +1,25 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC st_intract
+    DATASOURCENAME=test
+    CATALOGNAME='${databases.sp-di-1917-19-47.views.jdbc.st_intract.CATALOGNAME}' 
+    SCHEMANAME='${databases.sp-di-1917-19-47.views.jdbc.st_intract.SCHEMANAME}' 
+    RELATIONNAME='st_intract' 
+    OUTPUTSCHEMA (
+        val = 'val' :'java.lang.String' (OPT) (sourcetypename='text', sourcetypeid='-1', sourcetypesize='2147483647')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE st_intract I18N au_cst (
+        val:text (sourcetypesize = '2147483647', sourcetypeid = '2005')
+    )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD st_intract(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD val (any) OPT ANY
+        )
+        OUTPUTLIST (val
+        )
+        WRAPPER (jdbc st_intract)
+    );
+

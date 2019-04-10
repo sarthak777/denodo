@@ -1,0 +1,30 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JDBC gdb_common
+    FOLDER = '/gdb/datasource'
+    DRIVERCLASSNAME = 'org.postgresql.Driver'
+    DATABASEURI = '${databases.sp-di-1917-19-47.folder.gdb.folder.datasource.datasources.jdbc.gdb_common.DATABASEURI}'
+    USERNAME = '${databases.sp-di-1917-19-47.folder.gdb.folder.datasource.datasources.jdbc.gdb_common.USERNAME}'
+    USERPASSWORD = '${databases.sp-di-1917-19-47.folder.gdb.folder.datasource.datasources.jdbc.gdb_common.USERPASSWORD}' ${databases.sp-di-1917-19-47.folder.gdb.folder.datasource.datasources.jdbc.gdb_common.USERPASSWORD.ENCRYPTED}
+    CLASSPATH = 'postgresql-9'
+    DATABASENAME = 'postgresql'
+    DATABASEVERSION = '9'
+    FETCHSIZE = 1000
+    VALIDATIONQUERY = 'Select 1'
+    INITIALSIZE = 4
+    MAXIDLE = -1
+    MINIDLE = 0
+    MAXACTIVE = 20
+    EXHAUSTEDACTION = 1
+    TESTONBORROW = true
+    TESTONRETURN = false
+    TESTWHILEIDLE = false
+    TIMEBETWEENEVICTION = -1
+    NUMTESTPEREVICTION = 3
+    MINEVICTABLETIME = 1800000
+    POOLPREPAREDSTATEMENTS = false
+    MAXSLEEPINGPS = 4
+    INITIALCAPACITYPS = 8
+    DATA_LOAD_CONFIGURATION (
+        BATCHINSERTSIZE = 200
+    );
+

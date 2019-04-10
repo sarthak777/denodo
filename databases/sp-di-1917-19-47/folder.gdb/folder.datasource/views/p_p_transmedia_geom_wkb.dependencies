@@ -1,0 +1,5 @@
+﻿/databases/sp-di-1917-19-47/folder.gdb/gdb.vql
+/databases/sp-di-1917-19-47/folder.gdb/folder.datasource/datasource.vql
+/databases/sp-di-1917-19-47/folder.gdb/folder.datasource/datasources/jdbc/gdb_common.vql
+/databases/sp-di-1917-19-47/folder.gdb/folder.datasource/views/transmedia_geom_wkb.vql
+/databases/sp-di-1917-19-47/folder.gdb/folder.datasource/views/p_transmedia_geom_wkb.vql

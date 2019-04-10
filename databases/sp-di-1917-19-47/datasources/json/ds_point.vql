@@ -1,0 +1,10 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JSON ds_point
+    ROUTE HTTP 'http.CommonsHttpClientConnection,120000' GET '${databases.sp-di-1917-19-47.datasources.json.ds_point.ROUTE.HTTP.URL}'
+    HEADERS (
+        'content-type'='application/json', 
+        'accept'='application/json'
+    )
+    AUTHENTICATION OFF
+    PROXY OFF;
+

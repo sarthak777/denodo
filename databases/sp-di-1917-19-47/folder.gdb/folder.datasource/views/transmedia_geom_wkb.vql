@@ -1,0 +1,27 @@
+﻿CREATE OR REPLACE WRAPPER JDBC transmedia_geom_wkb
+    FOLDER = '/gdb/datasource'
+    DATASOURCENAME=gdb_common
+    SQLSENTENCE='Select fqn_id,ST_AsText(geom) as wkt from verizon_staging_v1.transmedia'   
+    OUTPUTSCHEMA (
+        fqn_id = 'fqn_id' :'java.lang.String' (sourcetypename='varchar', sourcetypeid='12', sourcetypedecimals='0', sourcetypesize='50')  SORTABLE NOT UPDATEABLE,
+        wkt = 'wkt' :'java.lang.String' (sourcetypename='text', sourcetypeid='12', sourcetypedecimals='0', sourcetypesize='2147483647')  NOT NULL SORTABLE NOT UPDATEABLE
+    );
+
+CREATE OR REPLACE TABLE transmedia_geom_wkb I18N us_pst (
+        fqn_id:text (sourcetypedecimals = '0', sourcetypesize = '50', sourcetypeid = '12'), 
+        wkt:text (sourcetypedecimals = '0', sourcetypesize = '2147483647', sourcetypeid = '12')
+    )
+    FOLDER = '/gdb/datasource'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD transmedia_geom_wkb(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD fqn_id NOS ZERO ()
+             ADD wkt NOS ZERO ()
+        )
+        OUTPUTLIST (fqn_id, wkt
+        )
+        WRAPPER (jdbc transmedia_geom_wkb)
+    );
+

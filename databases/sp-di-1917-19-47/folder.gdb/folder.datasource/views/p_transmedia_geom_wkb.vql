@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW p_transmedia_geom_wkb FOLDER = '/gdb/datasource' AS SELECT transmedia_geom_wkb.fqn_id AS fqn_id, transmedia_geom_wkb.wkt AS wkt FROM transmedia_geom_wkb;
+
+ALTER VIEW p_transmedia_geom_wkb
+ LAYOUT (transmedia_geom_wkb = [20, 20, 200, 65]);
+

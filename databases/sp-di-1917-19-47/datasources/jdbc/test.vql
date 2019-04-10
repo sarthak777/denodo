@@ -1,0 +1,29 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JDBC test
+    DRIVERCLASSNAME = 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
+    DATABASEURI = '${databases.sp-di-1917-19-47.datasources.jdbc.test.DATABASEURI}'
+    USERNAME = '${databases.sp-di-1917-19-47.datasources.jdbc.test.USERNAME}'
+    USERPASSWORD = '${databases.sp-di-1917-19-47.datasources.jdbc.test.USERPASSWORD}' ${databases.sp-di-1917-19-47.datasources.jdbc.test.USERPASSWORD.ENCRYPTED}
+    CLASSPATH = 'mssql-jdbc-6.x'
+    DATABASENAME = 'sqlserver'
+    DATABASEVERSION = '2016'
+    FETCHSIZE = 1000
+    VALIDATIONQUERY = 'Select 1'
+    INITIALSIZE = 4
+    MAXIDLE = -1
+    MINIDLE = 0
+    MAXACTIVE = 20
+    EXHAUSTEDACTION = 1
+    TESTONBORROW = true
+    TESTONRETURN = false
+    TESTWHILEIDLE = false
+    TIMEBETWEENEVICTION = -1
+    NUMTESTPEREVICTION = 3
+    MINEVICTABLETIME = 1800000
+    POOLPREPAREDSTATEMENTS = false
+    MAXSLEEPINGPS = 4
+    INITIALCAPACITYPS = 8
+    DATA_LOAD_CONFIGURATION (
+        BATCHINSERTSIZE = 1000
+    );
+
