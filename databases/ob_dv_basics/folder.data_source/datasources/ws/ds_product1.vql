@@ -1,0 +1,11 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE WS ds_product1
+    FOLDER = '/data_source'
+    WSDLURI = '${databases.ob_dv_basics.folder.data_source.datasources.ws.ds_product1.WSDLURI}'
+    MAXCONNECTIONS 50
+    CONNECTIONPOOLTIMEOUT 0
+    AUTHENTICATION WSS BASIC( 
+      USER '${databases.ob_dv_basics.folder.data_source.datasources.ws.ds_product1.USER}'
+      PASSWORD '${databases.ob_dv_basics.folder.data_source.datasources.ws.ds_product1.PASSWORD}' ${databases.ob_dv_basics.folder.data_source.datasources.ws.ds_product1.PASSWORD.ENCRYPTED} )
+    PROXY OFF;
+
