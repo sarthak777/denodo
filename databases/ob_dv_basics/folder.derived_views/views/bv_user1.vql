@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW bv_user1 FOLDER = '/derived_views' AS SELECT displayname, samaccountname, userprincipalname, memberof FROM FLATTEN bv_user AS v ( v.memberof);
+
+ALTER VIEW bv_user1
+ LAYOUT (bv_user = [20, 20, 267, 126]);
+
