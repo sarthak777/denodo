@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW p_bv_getallproducts FOLDER = '/derived_views' AS SELECT productname AS productname, sum(productprice) AS "3r45e6rt8y" FROM bv_getallproducts GROUP BY productname;
+
+ALTER VIEW p_bv_getallproducts
+ LAYOUT (bv_getallproducts = [20, 20, 200, 86]);
+

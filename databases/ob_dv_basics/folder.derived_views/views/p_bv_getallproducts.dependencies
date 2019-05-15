@@ -1,0 +1,5 @@
+﻿/databases/ob_dv_basics/folder.derived_views/derived_views.vql
+/databases/ob_dv_basics/folder.base_views/base_views.vql
+/databases/ob_dv_basics/folder.data_source/data_source.vql
+/databases/ob_dv_basics/folder.data_source/datasources/ws/ds_product1.vql
+/databases/ob_dv_basics/folder.base_views/views/bv_getallproducts.vql
