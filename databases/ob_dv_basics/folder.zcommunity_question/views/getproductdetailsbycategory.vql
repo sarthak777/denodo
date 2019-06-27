@@ -1,0 +1,94 @@
+﻿CREATE OR REPLACE WRAPPER WS getproductdetailsbycategory
+    FOLDER = '/zcommunity_question'
+    DATASOURCENAME=ds_product1
+    SERVICENAME='products-ws'
+    PORTNAME='ProductImplPort'
+    OPERATIONNAME='getProductDetailsByCategory'
+    INPUTMESSAGE='getProductDetailsByCategory'
+    OUTPUTMESSAGE='getProductDetailsByCategoryResponse'
+    OUTPUTSCHEMA (
+    parameters = '$$0': REGISTER OF (
+        categoryname='categoryName' (OBL)
+    ),
+    return = '$$$$': REGISTER OF (
+        productdetails = 'productDetails': ARRAY OF (
+            productdetaildata = 'ProductDetailData': REGISTER OF (
+                productid='productId',
+                productname='productName',
+                productprice='productPrice',
+                category = 'category': REGISTER OF (
+                    categoryid='categoryId',
+                    categoryname='categoryName'
+                ),
+                characteristics = 'characteristics': REGISTER OF (
+                    characteristic_dimensions='characteristic_dimensions',
+                    characteristic_weight='characteristic_weight',
+                    characteristic_details='characteristic_details',
+                    characteristic_color='characteristic_color'
+                ),
+                accessories = 'accessories': ARRAY OF (
+                    productdata = 'ProductData': REGISTER OF (
+                        productid='productId',
+                        productname='productName',
+                        productprice='productPrice'
+                    )
+                )
+            )
+        )
+    )
+    );
+
+CREATE OR REPLACE TYPE getproductdetailsbycategory_parameters AS REGISTER OF (categoryname:text);
+
+CREATE OR REPLACE TYPE getproductdetailsbycategory_return_productdetails_productdetaildata_category AS REGISTER OF (categoryid:int, categoryname:text);
+
+CREATE OR REPLACE TYPE getproductdetailsbycategory_return_productdetails_productdetaildata_characteristics AS REGISTER OF (characteristic_dimensions:text, characteristic_weight:text, characteristic_details:text, characteristic_color:text);
+
+CREATE OR REPLACE TYPE getproductdetailsbycategory_return_productdetails_productdetaildata_accessories_productdata AS REGISTER OF (productid:int, productname:text, productprice:float);
+
+CREATE OR REPLACE TYPE getproductdetailsbycategory_return_productdetails_productdetaildata_accessories AS ARRAY OF getproductdetailsbycategory_return_productdetails_productdetaildata_accessories_productdata;
+
+CREATE OR REPLACE TYPE getproductdetailsbycategory_return_productdetails_productdetaildata AS REGISTER OF (productid:int, productname:text, productprice:float, category:getproductdetailsbycategory_return_productdetails_productdetaildata_category, characteristics:getproductdetailsbycategory_return_productdetails_productdetaildata_characteristics, accessories:getproductdetailsbycategory_return_productdetails_productdetaildata_accessories);
+
+CREATE OR REPLACE TYPE getproductdetailsbycategory_return_productdetails AS ARRAY OF getproductdetailsbycategory_return_productdetails_productdetaildata;
+
+CREATE OR REPLACE TYPE getproductdetailsbycategory_return AS REGISTER OF (productdetails:getproductdetailsbycategory_return_productdetails);
+
+CREATE OR REPLACE TABLE getproductdetailsbycategory I18N au_cst (
+        parameters:getproductdetailsbycategory_parameters, 
+        return:getproductdetailsbycategory_return
+    )
+    FOLDER = '/zcommunity_question'
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD getproductdetailsbycategory(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD parameters (=,is null) OPT ONE
+             ADD return NOS ZERO ()
+             ADD return.productdetails NOS ZERO ()
+             ADD return.productdetails.productid NOS ZERO ()
+             ADD return.productdetails.productname NOS ZERO ()
+             ADD return.productdetails.productprice NOS ZERO ()
+             ADD return.productdetails.category NOS ZERO ()
+             ADD return.productdetails.category.categoryid NOS ZERO ()
+             ADD return.productdetails.category.categoryname NOS ZERO ()
+             ADD return.productdetails.characteristics NOS ZERO ()
+             ADD return.productdetails.characteristics.characteristic_dimensions NOS ZERO ()
+             ADD return.productdetails.characteristics.characteristic_weight NOS ZERO ()
+             ADD return.productdetails.characteristics.characteristic_details NOS ZERO ()
+             ADD return.productdetails.characteristics.characteristic_color NOS ZERO ()
+             ADD return.productdetails.accessories NOS ZERO ()
+             ADD return.productdetails.accessories.productid NOS ZERO ()
+             ADD return.productdetails.accessories.productname NOS ZERO ()
+             ADD return.productdetails.accessories.productprice NOS ZERO ()
+             ADD parameters.categoryname (=) OPT ONE
+             ADD return.productdetails NOS ZERO ()
+             ADD return.productdetails.accessories (any) OBL ONE
+        )
+        OUTPUTLIST (parameters, return
+        )
+        WRAPPER (ws getproductdetailsbycategory)
+    );
+
