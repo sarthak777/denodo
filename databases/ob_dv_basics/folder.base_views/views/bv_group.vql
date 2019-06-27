@@ -1,0 +1,32 @@
+﻿CREATE OR REPLACE WRAPPER LDAP bv_jhsdfg
+    FOLDER = '/base_views'
+    DATASOURCENAME=ds_ldap
+    LDAPEXPRESSION='(objectClass=group)'   
+    RECURSIVESEARCH=TRUE
+    SINGLE-VALUE=FALSE
+    OUTPUTSCHEMA (
+        cn = 'cn' : 'java.lang.String',
+        distinguishedname = 'distinguishedName' : 'java.lang.String',
+        objectcategory = 'objectCategory' : 'java.lang.String'
+    );
+
+CREATE OR REPLACE TABLE bv_group I18N au_cst (
+        cn:text, 
+        distinguishedname:text, 
+        objectcategory:text
+    )
+    FOLDER = '/base_views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD bv_jhsdfg(
+        I18N au_cst
+        CONSTRAINTS (
+             ADD cn NOS ZERO ()
+             ADD distinguishedname NOS ZERO ()
+             ADD objectcategory NOS ZERO ()
+        )
+        OUTPUTLIST (cn, distinguishedname, objectcategory
+        )
+        WRAPPER (ldap bv_jhsdfg)
+    );
+
