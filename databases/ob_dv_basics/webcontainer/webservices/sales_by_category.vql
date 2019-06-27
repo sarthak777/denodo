@@ -1,0 +1,5 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+UNDEPLOY IF EXISTS WEBSERVICE sales_by_category;
+
+DEPLOY WEBSERVICE sales_by_category LOGIN = '${databases.ob_dv_basics.webcontainer.webservices.sales_by_category.LOGIN}' PASSWORD = '${databases.ob_dv_basics.webcontainer.webservices.sales_by_category.PASSWORD}' ${databases.ob_dv_basics.webcontainer.webservices.sales_by_category.PASSWORD.ENCRYPTED};
+

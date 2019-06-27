@@ -1,0 +1,54 @@
+﻿CREATE OR REPLACE SOAP WEBSERVICE sales_by_category
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 90000
+        QUERYTIMEOUT = 900000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    I18N  = au_cst
+    DATETYPEMAPPING DATE
+    NOWRAPARRAYS
+    RAISEFAULTONIDU
+    DONOTAPPLYOUTPUTXSLTTOERRORS
+    AUTHENTICATION (WSS BASIC
+    USER 'admin'
+    PASSWORD 'OoMhDx2UIvWun4a/iKweaOuH8f5r8IHxt0gP0nZCToLIV1ryfaGA1Zs2EQrgbWpk4t19Dm64XTGmxFObxCsfNqrCA/D59QB05JMX5LUGH3RwnWtnPTnhShu+LXVTdmIX' ENCRYPTED )
+    OUTPUT 
+        ( STYLE DOCUMENT )
+    OPERATION 'saleby_category' (
+        TYPE SELECT
+        SCHEMA VIEW dv_sales_by_category
+        VQL = 'SELECT categoryname, saleid, productid, employeeid, customerid, saledate, bundleamount, productsaleprice, totalprice, productname, productprice FROM dv_sales_by_category ^ExecuteIfIsNotNull("WHERE ",@WHEREEXPRESSION,"") CONTEXT (''i18n'' = ''au_cst''^ExecuteIfIsNotNull(", ",@VERBOSEERRORS,"")^ExecuteIfIsNotNull(", ",@CONTEXTEXPRESSION,""))'
+        INPUTS 'saleby_category' (
+            'CATEGORYNAME' categoryname:'text' '=' OBL 
+        )
+        OUTPUT 
+            'DV_SALES_BY_CATEGORYReturn': Array of ( 'DV_SALES_BY_CATEGORYReturnRow': Register of (
+                categoryname : 'text',
+                saleid : 'text',
+                productid : 'text',
+                employeeid : 'text',
+                customerid : 'text',
+                saledate : 'text',
+                bundleamount : 'text',
+                productsaleprice : 'text',
+                totalprice : 'text',
+                productname : 'text',
+                productprice : 'float'
+            ) (
+                    '/bundleamount'='BUNDLEAMOUNT',
+                    '/categoryname'='CATEGORYNAME',
+                    '/customerid'='CUSTOMERID',
+                    '/employeeid'='EMPLOYEEID',
+                    '/productid'='PRODUCTID',
+                    '/productname'='PRODUCTNAME',
+                    '/productprice'='PRODUCTPRICE',
+                    '/productsaleprice'='PRODUCTSALEPRICE',
+                    '/saledate'='SALEDATE',
+                    '/saleid'='SALEID',
+                    '/totalprice'='TOTALPRICE'))
+    )
+    FOLDER = '/web_service';
+
