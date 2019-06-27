@@ -18,7 +18,7 @@
 
 CREATE OR REPLACE TYPE getproductsbycategory_parameters AS REGISTER OF (categoryname:text);
 
-CREATE OR REPLACE TABLE bv_getproductsbycategory I18N au_cst (
+CREATE OR REPLACE TABLE dv_getproductsbycategory I18N au_cst (
         parameters:getproductsbycategory_parameters, 
         productid:int, 
         productname:text, 
