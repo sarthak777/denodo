@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_seller_sales_array FOLDER = '/derived_views' AS SELECT (bv_getproductsbycategory.parameters).categoryname AS categoryname, bv_sales_all.saleid AS saleid, bv_sales_all.totalprice AS totalprice FROM dv_getproductsbycategory AS bv_getproductsbycategory INNER JOIN labs_db_basics.bv_sales_all AS bv_sales_all ON bv_getproductsbycategory.productid = bv_sales_all.productid  CONTEXT ('I18N' = 'au_cst');
+
+ALTER VIEW dv_seller_sales_array
+ LAYOUT (dv_getproductsbycategory = [170, 210, 200, 106], bv_sales_all = [690, 240, 200, 206]);
+

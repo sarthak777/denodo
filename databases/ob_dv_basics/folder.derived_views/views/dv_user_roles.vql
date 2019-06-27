@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_user_roles FOLDER = '/derived_views' AS SELECT bv_groups.cn AS cn, bv_groups.distinguishedname AS distinguishedname, bv_groups.objectcategory AS objectcategory, bv_user1.displayname AS displayname, bv_user1.samaccountname AS samaccountname, bv_user1.userprincipalname AS userprincipalname, bv_user1.memberof AS memberof FROM bv_user1 AS bv_user1 INNER JOIN bv_group AS bv_groups ON bv_user1.memberof = bv_groups.distinguishedname  WHERE bv_user1.displayname is not null  CONTEXT ('I18N' = 'au_cst');
+
+ALTER VIEW dv_user_roles
+ LAYOUT (bv_user1 = [389, 112, 200, 106], bv_group = [780, 80, 200, 86]);
+

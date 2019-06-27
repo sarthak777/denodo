@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_more_thanonerole FOLDER = '/derived_views' AS SELECT displayname AS displayname FROM dv_user_roles GROUP BY displayname HAVING count(cn) > 1 CONTEXT ('I18N' = 'au_cst');
+
+ALTER VIEW dv_more_thanonerole
+ LAYOUT (dv_user_roles = [20, 20, 270, 166]);
+

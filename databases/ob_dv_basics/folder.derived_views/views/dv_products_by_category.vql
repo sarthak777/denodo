@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW dv_products_by_category FOLDER = '/derived_views' AS SELECT dv_getproductsbycategory.parameters AS parameters, dv_getproductsbycategory.productid AS productid, dv_getproductsbycategory.productname AS productname, dv_getproductsbycategory.productprice AS productprice FROM dv_getproductsbycategory CONTEXT ('I18N' = 'au_cst');
+
+ALTER VIEW dv_products_by_category
+ LAYOUT (dv_getproductsbycategory = [20, 20, 334, 106]);
+
