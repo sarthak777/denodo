@@ -1,0 +1,7 @@
+﻿CREATE OR REPLACE VIEW threads_summary_log_20190719155839371 FOLDER = '/20190719155839371/threads' AS SELECT count_threads(thread_dump_as_text) AS threads_count, count_threads(deadlock_thread_dump_as_text) AS deadlock_threads_count, date FROM threads_instant_log_20190719155839371 WHERE cw_search_start_date = to_date('yyyy-MM-dd', '1970-01-01') CONTEXT ('I18N' = 'rfc_restful');
+
+ALTER VIEW threads_summary_log_20190719155839371
+ CACHE FULL
+     BATCHSIZEINCACHE DEFAULT TIMETOLIVEINCACHE NOEXPIRE
+    DECLARE CACHE INDEX threads_summary_20190719155839371_date_idx ON (date ASC);
+

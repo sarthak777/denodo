@@ -1,0 +1,5 @@
+﻿/databases/diagnostic/folder.20190719155839371/20190719155839371.vql
+/databases/diagnostic/folder.20190719155839371/folder.sessions/sessions.vql
+/databases/diagnostic/folder.20190719155839371/folder.sessions/folder.intermediate_views/intermediate_views.vql
+/databases/diagnostic/datasources/custom/log_custom_wrapper.vql
+/databases/diagnostic/folder.20190719155839371/folder.sessions/folder.intermediate_views/views/sessions_instant_log_20190719155839371.vql

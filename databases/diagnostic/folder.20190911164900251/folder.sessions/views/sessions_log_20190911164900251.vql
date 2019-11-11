@@ -1,0 +1,8 @@
+﻿CREATE OR REPLACE VIEW sessions_log_20190911164900251 FOLDER = '/20190911164900251/sessions' AS SELECT notification_type, connection_id, connection_start_time, case WHEN (notification_type <> 'loginOk') THEN connection_end_time ELSE NULL END AS connection_end_time, nullif(client_ip, '-') AS client_ip, nullif(user_agent, '-') AS user_agent, nullif(access_interface, '-') AS access_interface, session_id, session_start_time, case WHEN (notification_type not in ('loginOk', 'openSession')) THEN session_end_time ELSE NULL END AS session_end_time, nullif(login, '-') AS login, nullif(database_name, '-') AS database_name, nullif(webservice_name, '-') AS webservice_name, nullif(jms_queue_name, '-') AS jms_queue_name, nullif(intermediate_client_ip, '-') AS intermediate_client_ip, start_time, case WHEN (end_time is not null ) THEN end_time ELSE NULL END AS end_time FROM sessions_interval_log_20190911164900251 CONTEXT ('I18N' = 'rfc_restful');
+
+ALTER VIEW sessions_log_20190911164900251
+ CACHE FULL
+     BATCHSIZEINCACHE DEFAULT TIMETOLIVEINCACHE NOEXPIRE
+    DECLARE CACHE INDEX sessions_20190911164900251_start_time_idx ON (start_time ASC)
+    DECLARE CACHE INDEX sessions_20190911164900251_end_time_idx ON (end_time ASC);
+

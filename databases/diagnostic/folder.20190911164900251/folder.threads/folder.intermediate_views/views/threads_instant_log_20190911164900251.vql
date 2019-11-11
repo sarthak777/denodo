@@ -1,0 +1,48 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER CUSTOM threads_instant_log_20190911164900251
+    FOLDER = '/20190911164900251/threads/intermediate_views'
+    DATASOURCENAME=log_custom_wrapper
+    PARAMETERS (
+      'Date Pattern' = 'yyyy-MM-dd''T''HH:mm:ss.SSS',
+      'Date Extractor Pattern' = 'Thread dump start at: (\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d).*',
+      'Log timezone' = 'GMT',
+      'Content Extractor Pattern' = '[\^"]*(.*\\S)\\s+Thread Cpu info dump start at:[\^I]+(I.*")\\s+(?:No deadlock found|\\*+\\s+\\*+\\s+Deadlock found\\s+\\*+\\s+\\*+[\^"]*(.*?))(?:\\s|=|Thread logging started at:.*)+',
+      'Filepath' = ROUTE LOCAL 'LocalConnection' '${databases.diagnostic.folder.20190911164900251.folder.threads.folder.intermediate_views.views.custom.threads_instant_log_20190911164900251.Filepath.ROUTE.LOCAL.PATH}',
+      'Sequential Search Interval' = 60000,
+      'Rolling Implementation Class Name' = 'com.denodo.dashboard.connect.log.rollingpolicy.LexicographicRollingPolicy'
+    )
+    OUTPUTSCHEMA (
+        thread_dump_as_text = 'out0' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        thread_cpu_info_dump_as_text = 'out1' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        deadlock_thread_dump_as_text = 'out2' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        date = 'Extracted Date' : 'java.util.Date' (OPT) NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        cw_search_start_date = 'Search Start Date' : 'java.util.Date' (OBL) NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        cw_search_end_date = 'Search End Date' : 'java.util.Date' (OPT) NOT SORTABLE NOT UPDATEABLE
+    );
+
+CREATE OR REPLACE TABLE threads_instant_log_20190911164900251 I18N rfc_restful (
+        thread_dump_as_text:text, 
+        thread_cpu_info_dump_as_text:text, 
+        deadlock_thread_dump_as_text:text, 
+        date:date, 
+        cw_search_start_date:date, 
+        cw_search_end_date:date
+    )
+    FOLDER = '/20190911164900251/threads/intermediate_views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD threads_instant_log_20190911164900251(
+        I18N rfc_restful
+        CONSTRAINTS (
+             ADD thread_dump_as_text NOS ZERO ()
+             ADD thread_cpu_info_dump_as_text NOS ZERO ()
+             ADD deadlock_thread_dump_as_text NOS ZERO ()
+             ADD date (any) OPT ANY
+             ADD cw_search_start_date (any) OBL ONE
+             ADD cw_search_end_date (any) OPT ANY
+        )
+        OUTPUTLIST (cw_search_end_date, cw_search_start_date, date, deadlock_thread_dump_as_text, thread_cpu_info_dump_as_text, thread_dump_as_text
+        )
+        WRAPPER (custom threads_instant_log_20190911164900251)
+    );
+

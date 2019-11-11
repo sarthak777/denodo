@@ -1,0 +1,15 @@
+﻿CREATE OR REPLACE DATABASE diagnostic 'Database managed by the Diagnostic & Monitoring Tool.';
+
+ALTER DATABASE diagnostic
+  CHARSET RESTRICTED;
+
+ALTER DATABASE diagnostic
+  COST OPTIMIZATION OFF
+  QUERY SIMPLIFICATION OFF
+  CACHE ON (
+    MAINTENANCE OFF
+    MAINTAINERPERIOD 21600
+    TIMETOLIVE NOEXPIRE
+    DATASOURCE customvdpcachedatasource DATABASE diagnostic
+  );
+

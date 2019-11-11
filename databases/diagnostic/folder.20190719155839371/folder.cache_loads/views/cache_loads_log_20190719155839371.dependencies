@@ -1,0 +1,6 @@
+﻿/databases/diagnostic/folder.20190719155839371/20190719155839371.vql
+/databases/diagnostic/folder.20190719155839371/folder.cache_loads/cache_loads.vql
+/databases/diagnostic/folder.20190719155839371/folder.cache_loads/folder.intermediate_views/intermediate_views.vql
+/databases/diagnostic/datasources/custom/log_custom_wrapper.vql
+/databases/diagnostic/folder.20190719155839371/folder.cache_loads/folder.intermediate_views/views/cache_loads_instant_log_20190719155839371.vql
+/databases/diagnostic/folder.20190719155839371/folder.cache_loads/folder.intermediate_views/views/cache_loads_interval_log_20190719155839371.vql

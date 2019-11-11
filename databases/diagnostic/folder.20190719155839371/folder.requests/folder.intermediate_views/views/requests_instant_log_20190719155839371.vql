@@ -1,0 +1,111 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER CUSTOM requests_instant_log_20190719155839371
+    FOLDER = '/20190719155839371/requests/intermediate_views'
+    DATASOURCENAME=log_custom_wrapper
+    PARAMETERS (
+      'Date Pattern' = 'yyyy-MM-dd''T''HH:mm:ss.SSS',
+      'Date Extractor Pattern' = '.*\\t(\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d).*',
+      'Log timezone' = 'GMT',
+      'Content Extractor Pattern' = '([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t\\r\\n]*)(?:\\t([\^\\r\\n]*))?\\r?\\n?.*',
+      'Filepath' = ROUTE LOCAL 'LocalConnection' '${databases.diagnostic.folder.20190719155839371.folder.requests.folder.intermediate_views.views.custom.requests_instant_log_20190719155839371.Filepath.ROUTE.LOCAL.PATH}',
+      'Sequential Search Interval' = 1000,
+      'Rolling Implementation Class Name' = 'com.denodo.dashboard.connect.log.rollingpolicy.LexicographicRollingPolicy'
+    )
+    OUTPUTSCHEMA (
+        server_name = 'out0' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        host = 'out1' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        port = 'out2' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        id = 'out3' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        database_name = 'out4' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        user_name = 'out5' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        notification_type = 'out6' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        session_id = 'out7' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        start_time_as_text = 'out8' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        end_time_as_text = 'out9' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        duration_as_text = 'out10' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        waiting_time_as_text = 'out11' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        num_rows_as_text = 'out12' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        state = 'out13' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        completed_as_text = 'out14' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        cache_as_text = 'out15' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        query = 'out16' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        request_type = 'out17' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        elements = 'out18' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        user_agent = 'out19' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        access_interface = 'out20' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        client_ip = 'out21' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        transaction_id_as_text = 'out22' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        webservice_name = 'out23' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        date = 'Extracted Date' : 'java.util.Date' (OPT) NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        cw_search_start_date = 'Search Start Date' : 'java.util.Date' (OBL) NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        cw_search_end_date = 'Search End Date' : 'java.util.Date' (OPT) NOT SORTABLE NOT UPDATEABLE
+    );
+
+CREATE OR REPLACE TABLE requests_instant_log_20190719155839371 I18N rfc_restful (
+        server_name:text, 
+        host:text, 
+        port:int, 
+        id:long, 
+        database_name:text, 
+        user_name:text, 
+        notification_type:text, 
+        session_id:long, 
+        start_time_as_text:text, 
+        end_time_as_text:text, 
+        duration_as_text:text, 
+        waiting_time_as_text:text, 
+        num_rows_as_text:text, 
+        state:text, 
+        completed_as_text:text, 
+        cache_as_text:text, 
+        query:text, 
+        request_type:text, 
+        elements:text, 
+        user_agent:text, 
+        access_interface:text, 
+        client_ip:text, 
+        transaction_id_as_text:text, 
+        webservice_name:text, 
+        date:date, 
+        cw_search_start_date:date, 
+        cw_search_end_date:date
+    )
+    FOLDER = '/20190719155839371/requests/intermediate_views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD requests_instant_log_20190719155839371(
+        I18N rfc_restful
+        CONSTRAINTS (
+             ADD server_name NOS ZERO ()
+             ADD host NOS ZERO ()
+             ADD port NOS ZERO ()
+             ADD id NOS ZERO ()
+             ADD database_name NOS ZERO ()
+             ADD user_name NOS ZERO ()
+             ADD notification_type NOS ZERO ()
+             ADD session_id NOS ZERO ()
+             ADD start_time_as_text NOS ZERO ()
+             ADD end_time_as_text NOS ZERO ()
+             ADD duration_as_text NOS ZERO ()
+             ADD waiting_time_as_text NOS ZERO ()
+             ADD num_rows_as_text NOS ZERO ()
+             ADD state NOS ZERO ()
+             ADD completed_as_text NOS ZERO ()
+             ADD cache_as_text NOS ZERO ()
+             ADD query NOS ZERO ()
+             ADD request_type NOS ZERO ()
+             ADD elements NOS ZERO ()
+             ADD user_agent NOS ZERO ()
+             ADD access_interface NOS ZERO ()
+             ADD client_ip NOS ZERO ()
+             ADD transaction_id_as_text NOS ZERO ()
+             ADD webservice_name NOS ZERO ()
+             ADD date (any) OPT ANY
+             ADD cw_search_start_date (any) OBL ONE
+             ADD cw_search_end_date (any) OPT ANY
+        )
+        OUTPUTLIST (access_interface, cache_as_text, client_ip, completed_as_text, cw_search_end_date, cw_search_start_date, database_name, date, duration_as_text, elements, end_time_as_text, host, id, notification_type, num_rows_as_text, port, query, request_type, server_name, session_id, start_time_as_text, state, transaction_id_as_text, user_agent, user_name, waiting_time_as_text, webservice_name
+        )
+        WRAPPER (custom requests_instant_log_20190719155839371)
+    );
+

@@ -1,0 +1,8 @@
+﻿CREATE OR REPLACE VIEW requests_log_20190719155839371 FOLDER = '/20190719155839371/requests' AS SELECT id, database_name, user_name, notification_type, session_id, start_time, case WHEN (end_time is not null ) THEN end_time WHEN (start_time < to_date('yyyy-MM-dd''T''HH:mm:ss.SSS', '2019-06-21T13:16:23.856')) THEN to_date('yyyy-MM-dd''T''HH:mm:ss.SSS', '2019-06-21T13:16:23.855') WHEN (start_time between to_date('yyyy-MM-dd''T''HH:mm:ss.SSS', '2019-06-21T13:16:23.856') AND to_date('yyyy-MM-dd''T''HH:mm:ss.SSS', '2019-07-19T10:33:33.890')) THEN to_date('yyyy-MM-dd''T''HH:mm:ss.SSS', '2019-07-19T10:33:33.889') ELSE NULL END AS end_time, case duration_as_text WHEN '-' THEN NULL ELSE cast('long', duration_as_text) END AS duration, case waiting_time_as_text WHEN '-' THEN NULL ELSE cast('long', waiting_time_as_text) END AS waiting_time, case num_rows_as_text WHEN '-' THEN NULL ELSE cast('long', num_rows_as_text) END AS num_rows, nullif(state, '-') AS state, case cache_as_text WHEN '-' THEN NULL ELSE cast('boolean', cache_as_text) END AS cache, substr(query FROM 1 FOR 32672) AS query, request_type, nullif(elements, '-') AS elements, nullif(user_agent, '-') AS user_agent, access_interface, nullif(client_ip, '-') AS client_ip, case transaction_id_as_text WHEN '-' THEN NULL ELSE cast('long', transaction_id_as_text) END AS transaction_id, nullif(webservice_name, '-') AS webservice_name FROM requests_interval_log_20190719155839371 CONTEXT ('I18N' = 'rfc_restful');
+
+ALTER VIEW requests_log_20190719155839371
+ CACHE FULL
+     BATCHSIZEINCACHE DEFAULT TIMETOLIVEINCACHE NOEXPIRE
+    DECLARE CACHE INDEX requests_20190719155839371_start_time_idx ON (start_time ASC)
+    DECLARE CACHE INDEX requests_20190719155839371_end_time_idx ON (end_time ASC);
+

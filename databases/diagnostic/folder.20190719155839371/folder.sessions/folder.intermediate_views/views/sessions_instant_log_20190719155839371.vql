@@ -1,0 +1,93 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER CUSTOM sessions_instant_log_20190719155839371
+    FOLDER = '/20190719155839371/sessions/intermediate_views'
+    DATASOURCENAME=log_custom_wrapper
+    PARAMETERS (
+      'Date Pattern' = 'yyyy-MM-dd''T''HH:mm:ss.SSS',
+      'Date Extractor Pattern' = '.*\\t(\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d).*',
+      'Log timezone' = 'GMT',
+      'Content Extractor Pattern' = '([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\r\\n]*)\\r?\\n?.*',
+      'Filepath' = ROUTE LOCAL 'LocalConnection' '${databases.diagnostic.folder.20190719155839371.folder.sessions.folder.intermediate_views.views.custom.sessions_instant_log_20190719155839371.Filepath.ROUTE.LOCAL.PATH}',
+      'Sequential Search Interval' = 1000,
+      'Rolling Implementation Class Name' = 'com.denodo.dashboard.connect.log.rollingpolicy.LexicographicRollingPolicy'
+    )
+    OUTPUTSCHEMA (
+        server_name = 'out0' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        host = 'out1' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        port = 'out2' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        notification_type = 'out3' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        connection_id = 'out4' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        connection_start_time_as_text = 'out5' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        connection_end_time_as_text = 'out6' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        client_ip = 'out7' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        user_agent = 'out8' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        access_interface = 'out9' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        session_id = 'out10' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        session_start_time_as_text = 'out11' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        session_end_time_as_text = 'out12' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        login = 'out13' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        database_name = 'out14' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        webservice_name = 'out15' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        jms_queue_name = 'out16' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        intermediate_client_ip = 'out17' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        date = 'Extracted Date' : 'java.util.Date' (OPT) NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        cw_search_start_date = 'Search Start Date' : 'java.util.Date' (OBL) NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        cw_search_end_date = 'Search End Date' : 'java.util.Date' (OPT) NOT SORTABLE NOT UPDATEABLE
+    );
+
+CREATE OR REPLACE TABLE sessions_instant_log_20190719155839371 I18N rfc_restful (
+        server_name:text, 
+        host:text, 
+        port:int, 
+        notification_type:text, 
+        connection_id:long, 
+        connection_start_time_as_text:text, 
+        connection_end_time_as_text:text, 
+        client_ip:text, 
+        user_agent:text, 
+        access_interface:text, 
+        session_id:long, 
+        session_start_time_as_text:text, 
+        session_end_time_as_text:text, 
+        login:text, 
+        database_name:text, 
+        webservice_name:text, 
+        jms_queue_name:text, 
+        intermediate_client_ip:text, 
+        date:date, 
+        cw_search_start_date:date, 
+        cw_search_end_date:date
+    )
+    FOLDER = '/20190719155839371/sessions/intermediate_views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD sessions_instant_log_20190719155839371(
+        I18N rfc_restful
+        CONSTRAINTS (
+             ADD server_name NOS ZERO ()
+             ADD host NOS ZERO ()
+             ADD port NOS ZERO ()
+             ADD notification_type NOS ZERO ()
+             ADD connection_id NOS ZERO ()
+             ADD connection_start_time_as_text NOS ZERO ()
+             ADD connection_end_time_as_text NOS ZERO ()
+             ADD client_ip NOS ZERO ()
+             ADD user_agent NOS ZERO ()
+             ADD access_interface NOS ZERO ()
+             ADD session_id NOS ZERO ()
+             ADD session_start_time_as_text NOS ZERO ()
+             ADD session_end_time_as_text NOS ZERO ()
+             ADD login NOS ZERO ()
+             ADD database_name NOS ZERO ()
+             ADD webservice_name NOS ZERO ()
+             ADD jms_queue_name NOS ZERO ()
+             ADD intermediate_client_ip NOS ZERO ()
+             ADD date (any) OPT ANY
+             ADD cw_search_start_date (any) OBL ONE
+             ADD cw_search_end_date (any) OPT ANY
+        )
+        OUTPUTLIST (access_interface, client_ip, connection_end_time_as_text, connection_id, connection_start_time_as_text, cw_search_end_date, cw_search_start_date, database_name, date, host, intermediate_client_ip, jms_queue_name, login, notification_type, port, server_name, session_end_time_as_text, session_id, session_start_time_as_text, user_agent, webservice_name
+        )
+        WRAPPER (custom sessions_instant_log_20190719155839371)
+    );
+

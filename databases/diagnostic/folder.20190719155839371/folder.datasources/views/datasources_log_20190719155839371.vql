@@ -1,0 +1,7 @@
+﻿CREATE OR REPLACE VIEW datasources_log_20190719155839371 FOLDER = '/20190719155839371/datasources' AS SELECT database_name, type, name, active_requests, total_requests, case WHEN (pool_size_as_text = '-') THEN NULL ELSE cast('long', pool_size_as_text) END AS pool_size, case pool_size_as_text WHEN '-' THEN NULL WHEN '0' THEN 0 ELSE ((100*cast('double', active_connections_as_text))/cast('double', pool_size_as_text)) END AS pool_load, case WHEN (active_connections_as_text = '-') THEN NULL ELSE cast('long', active_connections_as_text) END AS active_connections, case WHEN (idle_connections_as_text = '-') THEN NULL ELSE cast('long', idle_connections_as_text) END AS idle_connections, nullif(ping_status, '-') AS ping_status, case WHEN (ping_execution_time_as_text = '-') THEN NULL ELSE to_date('yyyy-MM-dd''T''HH:mm:ss.SSS', ping_execution_time_as_text) END AS ping_execution_time, case WHEN (ping_duration_as_text = '-') THEN NULL ELSE cast('long', ping_duration_as_text) END AS ping_duration, nullif(ping_down_cause, '-') AS ping_down_cause, date FROM datasources_instant_log_20190719155839371 WHERE cw_search_start_date = to_date('yyyy-MM-dd', '1970-01-01') CONTEXT ('I18N' = 'rfc_restful');
+
+ALTER VIEW datasources_log_20190719155839371
+ CACHE FULL
+     BATCHSIZEINCACHE DEFAULT TIMETOLIVEINCACHE NOEXPIRE
+    DECLARE CACHE INDEX datasources_20190719155839371_date_idx ON (date ASC);
+

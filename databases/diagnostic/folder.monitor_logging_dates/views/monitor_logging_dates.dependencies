@@ -1,0 +1,4 @@
+﻿/databases/diagnostic/folder.monitor_logging_dates/monitor_logging_dates.vql
+/databases/diagnostic/folder.monitor_logging_dates/folder.intermediate_views/intermediate_views.vql
+/databases/diagnostic/datasources/custom/log_custom_wrapper.vql
+/databases/diagnostic/folder.monitor_logging_dates/folder.intermediate_views/views/monitor_logging_dates_aux.vql

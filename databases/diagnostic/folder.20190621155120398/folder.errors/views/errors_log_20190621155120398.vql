@@ -1,0 +1,7 @@
+﻿CREATE OR REPLACE VIEW errors_log_20190621155120398 FOLDER = '/20190621155120398/errors' AS SELECT elapsed_milliseconds, thread_name, priority, date, category, nullif(nested_diagnostic_context, '') AS nested_diagnostic_context, substr(message FROM 1 FOR 32672) AS message, substr(error_trace FROM 1 FOR 32672) AS error_trace FROM errors_instant_log_20190621155120398 WHERE cw_search_start_date = to_date('yyyy-MM-dd', '1970-01-01') CONTEXT ('I18N' = 'rfc_restful');
+
+ALTER VIEW errors_log_20190621155120398
+ CACHE FULL
+     BATCHSIZEINCACHE DEFAULT TIMETOLIVEINCACHE NOEXPIRE
+    DECLARE CACHE INDEX errors_20190621155120398_date_idx ON (date ASC);
+

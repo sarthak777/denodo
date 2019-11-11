@@ -1,0 +1,2 @@
+﻿CREATE OR REPLACE VIEW parsed_threads_instant_log_20190911164900251 FOLDER = '/20190911164900251/threads/intermediate_views' AS SELECT parse_thread_dump(thread_dump_as_text, thread_cpu_info_dump_as_text, deadlock_thread_dump_as_text) AS thread_dump, date FROM threads_instant_log_20190911164900251 WHERE cw_search_start_date = to_date('yyyy-MM-dd', '1970-01-01') CONTEXT ('I18N' = 'rfc_restful');
+

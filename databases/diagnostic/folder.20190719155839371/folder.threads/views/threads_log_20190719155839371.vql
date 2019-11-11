@@ -1,0 +1,7 @@
+﻿CREATE OR REPLACE VIEW threads_log_20190719155839371 FOLDER = '/20190719155839371/threads' AS SELECT date, name, id, lock_object, lock_owner_id, lock_owner_name, previous_cpu_time, cpu_time, elapsed_cpu_time, elapsed_time, cpu_usage, in_native, suspended, in_deadlock, state, stack_trace FROM FLATTEN parsed_threads_instant_log_20190719155839371 AS v ( v.thread_dump) CONTEXT ('I18N' = 'rfc_restful');
+
+ALTER VIEW threads_log_20190719155839371
+ CACHE FULL
+     BATCHSIZEINCACHE DEFAULT TIMETOLIVEINCACHE NOEXPIRE
+    DECLARE CACHE INDEX threads_20190719155839371_date_idx ON (date ASC);
+

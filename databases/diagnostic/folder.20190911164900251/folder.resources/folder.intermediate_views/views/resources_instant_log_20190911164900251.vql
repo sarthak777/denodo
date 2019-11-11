@@ -1,0 +1,147 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER CUSTOM resources_instant_log_20190911164900251
+    FOLDER = '/20190911164900251/resources/intermediate_views'
+    DATASOURCENAME=log_custom_wrapper
+    PARAMETERS (
+      'Date Pattern' = 'yyyy-MM-dd''T''HH:mm:ss.SSS',
+      'Date Extractor Pattern' = '.*(\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d).*',
+      'Log timezone' = 'GMT',
+      'Content Extractor Pattern' = '([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^/]*)/([\^\\t]*)\\t([\^/]*)/([\^\\t]*)\\t([\^/]*)/([\^\\t]*)\\t([\^/]*)/([\^\\t]*)\\t([\^/]*)/([\^\\t]*)\\t([\^/]*)/([\^\\t]*)\\t([\^/]*)/([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\r\\n]*)\\r?\\n?.*',
+      'Filepath' = ROUTE LOCAL 'LocalConnection' '${databases.diagnostic.folder.20190911164900251.folder.resources.folder.intermediate_views.views.custom.resources_instant_log_20190911164900251.Filepath.ROUTE.LOCAL.PATH}',
+      'Sequential Search Interval' = 30000,
+      'Rolling Implementation Class Name' = 'com.denodo.dashboard.connect.log.rollingpolicy.LexicographicRollingPolicy'
+    )
+    OUTPUTSCHEMA (
+        server_name = 'out0' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        host = 'out1' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        port = 'out2' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        date_as_text = 'out3' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        perm_gen = 'out4' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        max_perm_gen = 'out5' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        survivor_space = 'out6' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        max_survivor_space = 'out7' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        old_gen = 'out8' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        max_old_gen = 'out9' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        eden_space = 'out10' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        max_eden_space = 'out11' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        code_cache = 'out12' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        max_code_cache = 'out13' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        heap_memory_usage = 'out14' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        max_heap_memory_usage = 'out15' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        non_heap_memory_usage = 'out16' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        max_non_heap_memory_usage = 'out17' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        loaded_class_count = 'out18' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        total_loaded_class_count = 'out19' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        thread_count = 'out20' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        peak_thread_count = 'out21' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        vdp_total_connections = 'out22' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        vdp_active_connections = 'out23' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        vdp_active_requests = 'out24' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        vdp_waiting_requests = 'out25' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        vdp_total_memory = 'out26' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        vdp_max_memory = 'out27' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        cpu_percentage = 'out28' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        gc_collection_count_old = 'out29' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        gc_collection_count_young = 'out30' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        gc_collection_time_old = 'out31' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        gc_collection_time_young = 'out32' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        gc_percentage_old = 'out33' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        gc_percentage_young = 'out34' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        gc_percentage = 'out35' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        date = 'Extracted Date' : 'java.util.Date' (OPT) NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        cw_search_start_date = 'Search Start Date' : 'java.util.Date' (OBL) NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        cw_search_end_date = 'Search End Date' : 'java.util.Date' (OPT) NOT SORTABLE NOT UPDATEABLE
+    );
+
+CREATE OR REPLACE TABLE resources_instant_log_20190911164900251 I18N rfc_restful (
+        server_name:text, 
+        host:text, 
+        port:int, 
+        date_as_text:text, 
+        perm_gen:long, 
+        max_perm_gen:long, 
+        survivor_space:long, 
+        max_survivor_space:long, 
+        old_gen:long, 
+        max_old_gen:long, 
+        eden_space:long, 
+        max_eden_space:long, 
+        code_cache:long, 
+        max_code_cache:long, 
+        heap_memory_usage:long, 
+        max_heap_memory_usage:long, 
+        non_heap_memory_usage:long, 
+        max_non_heap_memory_usage:long, 
+        loaded_class_count:int, 
+        total_loaded_class_count:long, 
+        thread_count:int, 
+        peak_thread_count:int, 
+        vdp_total_connections:long, 
+        vdp_active_connections:long, 
+        vdp_active_requests:long, 
+        vdp_waiting_requests:long, 
+        vdp_total_memory:long, 
+        vdp_max_memory:long, 
+        cpu_percentage:float, 
+        gc_collection_count_old:long, 
+        gc_collection_count_young:long, 
+        gc_collection_time_old:long, 
+        gc_collection_time_young:long, 
+        gc_percentage_old:float, 
+        gc_percentage_young:float, 
+        gc_percentage:float, 
+        date:date, 
+        cw_search_start_date:date, 
+        cw_search_end_date:date
+    )
+    FOLDER = '/20190911164900251/resources/intermediate_views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD resources_instant_log_20190911164900251(
+        I18N rfc_restful
+        CONSTRAINTS (
+             ADD server_name NOS ZERO ()
+             ADD host NOS ZERO ()
+             ADD port NOS ZERO ()
+             ADD date_as_text NOS ZERO ()
+             ADD perm_gen NOS ZERO ()
+             ADD max_perm_gen NOS ZERO ()
+             ADD survivor_space NOS ZERO ()
+             ADD max_survivor_space NOS ZERO ()
+             ADD old_gen NOS ZERO ()
+             ADD max_old_gen NOS ZERO ()
+             ADD eden_space NOS ZERO ()
+             ADD max_eden_space NOS ZERO ()
+             ADD code_cache NOS ZERO ()
+             ADD max_code_cache NOS ZERO ()
+             ADD heap_memory_usage NOS ZERO ()
+             ADD max_heap_memory_usage NOS ZERO ()
+             ADD non_heap_memory_usage NOS ZERO ()
+             ADD max_non_heap_memory_usage NOS ZERO ()
+             ADD loaded_class_count NOS ZERO ()
+             ADD total_loaded_class_count NOS ZERO ()
+             ADD thread_count NOS ZERO ()
+             ADD peak_thread_count NOS ZERO ()
+             ADD vdp_total_connections NOS ZERO ()
+             ADD vdp_active_connections NOS ZERO ()
+             ADD vdp_active_requests NOS ZERO ()
+             ADD vdp_waiting_requests NOS ZERO ()
+             ADD vdp_total_memory NOS ZERO ()
+             ADD vdp_max_memory NOS ZERO ()
+             ADD cpu_percentage NOS ZERO ()
+             ADD gc_collection_count_old NOS ZERO ()
+             ADD gc_collection_count_young NOS ZERO ()
+             ADD gc_collection_time_old NOS ZERO ()
+             ADD gc_collection_time_young NOS ZERO ()
+             ADD gc_percentage_old NOS ZERO ()
+             ADD gc_percentage_young NOS ZERO ()
+             ADD gc_percentage NOS ZERO ()
+             ADD date (any) OPT ANY
+             ADD cw_search_start_date (any) OBL ONE
+             ADD cw_search_end_date (any) OPT ANY
+        )
+        OUTPUTLIST (code_cache, cpu_percentage, cw_search_end_date, cw_search_start_date, date, date_as_text, eden_space, gc_collection_count_old, gc_collection_count_young, gc_collection_time_old, gc_collection_time_young, gc_percentage, gc_percentage_old, gc_percentage_young, heap_memory_usage, host, loaded_class_count, max_code_cache, max_eden_space, max_heap_memory_usage, max_non_heap_memory_usage, max_old_gen, max_perm_gen, max_survivor_space, non_heap_memory_usage, old_gen, peak_thread_count, perm_gen, port, server_name, survivor_space, thread_count, total_loaded_class_count, vdp_active_connections, vdp_active_requests, vdp_max_memory, vdp_total_connections, vdp_total_memory, vdp_waiting_requests
+        )
+        WRAPPER (custom resources_instant_log_20190911164900251)
+    );
+

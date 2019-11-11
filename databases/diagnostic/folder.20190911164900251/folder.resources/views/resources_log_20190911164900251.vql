@@ -1,0 +1,7 @@
+﻿CREATE OR REPLACE VIEW resources_log_20190911164900251 FOLDER = '/20190911164900251/resources' AS SELECT date, (survivor_space+eden_space) AS young_space, (nullif(max_survivor_space, -1)+nullif(max_eden_space, -1)) AS max_young_space, old_gen, nullif(max_old_gen, -1) AS max_old_gen, heap_memory_usage, vdp_total_memory AS commited_heap_memory_usage, nullif(max_heap_memory_usage, -1) AS max_heap_memory_usage, vdp_total_connections, vdp_active_connections, vdp_active_requests, vdp_waiting_requests, cpu_percentage, nullif(gc_collection_count_old, -1) AS gc_collection_count_old, nullif(gc_collection_count_young, -1) AS gc_collection_count_young, nullif(gc_collection_time_old, -1) AS gc_collection_time_old, nullif(gc_collection_time_young, -1) AS gc_collection_time_young, gc_percentage_old, gc_percentage_young, gc_percentage FROM resources_instant_log_20190911164900251 WHERE cw_search_start_date = to_date('yyyy-MM-dd', '1970-01-01') CONTEXT ('I18N' = 'rfc_restful');
+
+ALTER VIEW resources_log_20190911164900251
+ CACHE FULL
+     BATCHSIZEINCACHE DEFAULT TIMETOLIVEINCACHE NOEXPIRE
+    DECLARE CACHE INDEX resources_20190911164900251_date_idx ON (date ASC);
+

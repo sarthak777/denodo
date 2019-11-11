@@ -1,0 +1,48 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER CUSTOM monitor_logging_dates_aux
+    FOLDER = '/monitor_logging_dates/intermediate_views'
+    DATASOURCENAME=log_custom_wrapper
+    PARAMETERS (
+      'Date Pattern' = 'yyyy-MM-dd''T''HH:mm:ss.SSS',
+      'Date Extractor Pattern' = '.*[Ll]ogging started at: (\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d).*',
+      'Log timezone' = 'GMT',
+      'Content Extractor Pattern' = '.*[Ll]ogging started at: \\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d(?:\\. Denodo Monitor.*? started at: (\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d))?(?:\\. VDP Server.*? started at: (\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d))?.*',
+      'Filepath' = ROUTE LOCAL 'LocalConnection' '${databases.diagnostic.folder.monitor_logging_dates.folder.intermediate_views.views.custom.monitor_logging_dates_aux.Filepath.ROUTE.LOCAL.PATH}',
+      'Sequential Search Interval' = 1,
+      'Rolling Implementation Class Name' = 'com.denodo.dashboard.connect.log.rollingpolicy.LexicographicRollingPolicy'
+    )
+    OUTPUTSCHEMA (
+        monitor_start_date_as_text = 'out0' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        vdp_start_date_as_text = 'out1' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        logging_date = 'Extracted Date' : 'java.util.Date' (OPT) NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        cw_search_start_date = 'Search Start Date' : 'java.util.Date' (OBL) NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        cw_search_end_date = 'Search End Date' : 'java.util.Date' (OPT) NOT SORTABLE NOT UPDATEABLE,
+        monitor_log_file = 'MONITOR_LOG_FILE' : 'java.lang.String' (OBL) EXTERN NOT SORTABLE NOT UPDATEABLE
+    );
+
+CREATE OR REPLACE TABLE monitor_logging_dates_aux I18N rfc_restful (
+        monitor_start_date_as_text:text, 
+        vdp_start_date_as_text:text, 
+        logging_date:date, 
+        cw_search_start_date:date, 
+        cw_search_end_date:date, 
+        monitor_log_file:text
+    )
+    FOLDER = '/monitor_logging_dates/intermediate_views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD monitor_logging_dates_aux(
+        I18N rfc_restful
+        CONSTRAINTS (
+             ADD monitor_start_date_as_text NOS ZERO ()
+             ADD vdp_start_date_as_text NOS ZERO ()
+             ADD logging_date (any) OPT ANY
+             ADD cw_search_start_date (=) OBL ONE
+             ADD cw_search_end_date (any) OPT ANY
+             ADD monitor_log_file (=) OBL ONE
+        )
+        OUTPUTLIST (cw_search_end_date, cw_search_start_date, logging_date, monitor_start_date_as_text, vdp_start_date_as_text
+        )
+        WRAPPER (custom monitor_logging_dates_aux)
+    );
+

@@ -1,0 +1,63 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER CUSTOM errors_instant_log_20190621155120398
+    FOLDER = '/20190621155120398/errors/intermediate_views'
+    DATASOURCENAME=log_custom_wrapper
+    PARAMETERS (
+      'Date Pattern' = 'yyyy-MM-dd''T''HH:mm:ss.SSS',
+      'Date Extractor Pattern' = '.*?\\s(\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d)\\s.*',
+      'Log timezone' = 'GMT',
+      'Content Extractor Pattern' = '(\\d+)\\s+\\[([\^\\]]+)\\]\\s+(\\S+)\\s+(\\S+)\\s+(\\S+)\\s(\\S*)\\s-\\s(.*?)\\s*((?<=\\n)\\w+\\.\\w+\\..*\\S)?\\s*',
+      'Filepath' = ROUTE LOCAL 'LocalConnection' '${databases.diagnostic.folder.20190621155120398.folder.errors.folder.intermediate_views.views.custom.errors_instant_log_20190621155120398.Filepath.ROUTE.LOCAL.PATH}',
+      'Sequential Search Interval' = 1000,
+      'Rolling Implementation Class Name' = 'com.denodo.dashboard.connect.log.rollingpolicy.LexicographicRollingPolicy'
+    )
+    OUTPUTSCHEMA (
+        elapsed_milliseconds = 'out0' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        thread_name = 'out1' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        priority = 'out2' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        date_as_text = 'out3' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        category = 'out4' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        nested_diagnostic_context = 'out5' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        message = 'out6' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        error_trace = 'out7' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        date = 'Extracted Date' : 'java.util.Date' (OPT) NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        cw_search_start_date = 'Search Start Date' : 'java.util.Date' (OBL) NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        cw_search_end_date = 'Search End Date' : 'java.util.Date' (OPT) NOT SORTABLE NOT UPDATEABLE
+    );
+
+CREATE OR REPLACE TABLE errors_instant_log_20190621155120398 I18N rfc_restful (
+        elapsed_milliseconds:long, 
+        thread_name:text, 
+        priority:text, 
+        date_as_text:text, 
+        category:text, 
+        nested_diagnostic_context:text, 
+        message:text, 
+        error_trace:text, 
+        date:date, 
+        cw_search_start_date:date, 
+        cw_search_end_date:date
+    )
+    FOLDER = '/20190621155120398/errors/intermediate_views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD errors_instant_log_20190621155120398(
+        I18N rfc_restful
+        CONSTRAINTS (
+             ADD elapsed_milliseconds NOS ZERO ()
+             ADD thread_name NOS ZERO ()
+             ADD priority NOS ZERO ()
+             ADD date_as_text NOS ZERO ()
+             ADD category NOS ZERO ()
+             ADD nested_diagnostic_context NOS ZERO ()
+             ADD message NOS ZERO ()
+             ADD error_trace NOS ZERO ()
+             ADD date (any) OPT ANY
+             ADD cw_search_start_date (any) OBL ONE
+             ADD cw_search_end_date (any) OPT ANY
+        )
+        OUTPUTLIST (category, cw_search_end_date, cw_search_start_date, date, date_as_text, elapsed_milliseconds, error_trace, message, nested_diagnostic_context, priority, thread_name
+        )
+        WRAPPER (custom errors_instant_log_20190621155120398)
+    );
+

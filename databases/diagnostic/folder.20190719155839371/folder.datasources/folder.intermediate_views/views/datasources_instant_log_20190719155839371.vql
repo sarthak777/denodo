@@ -1,0 +1,78 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER CUSTOM datasources_instant_log_20190719155839371
+    FOLDER = '/20190719155839371/datasources/intermediate_views'
+    DATASOURCENAME=log_custom_wrapper
+    PARAMETERS (
+      'Date Pattern' = 'yyyy-MM-dd''T''HH:mm:ss.SSS',
+      'Date Extractor Pattern' = '.*?(\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d)\\t.*',
+      'Log timezone' = 'GMT',
+      'Content Extractor Pattern' = '([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t\\r\\n]*)(?:\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\r\\n]*))?\\r?\\n?.*',
+      'Filepath' = ROUTE LOCAL 'LocalConnection' '${databases.diagnostic.folder.20190719155839371.folder.datasources.folder.intermediate_views.views.custom.datasources_instant_log_20190719155839371.Filepath.ROUTE.LOCAL.PATH}',
+      'Sequential Search Interval' = 30000,
+      'Rolling Implementation Class Name' = 'com.denodo.dashboard.connect.log.rollingpolicy.LexicographicRollingPolicy'
+    )
+    OUTPUTSCHEMA (
+        date_as_text = 'out0' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        database_name = 'out1' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        type = 'out2' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        name = 'out3' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        active_requests = 'out4' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        total_requests = 'out5' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        pool_size_as_text = 'out6' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        active_connections_as_text = 'out7' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        idle_connections_as_text = 'out8' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        ping_status = 'out9' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        ping_execution_time_as_text = 'out10' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        ping_duration_as_text = 'out11' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        ping_down_cause = 'out12' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        date = 'Extracted Date' : 'java.util.Date' (OPT) NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        cw_search_start_date = 'Search Start Date' : 'java.util.Date' (OBL) NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        cw_search_end_date = 'Search End Date' : 'java.util.Date' (OPT) NOT SORTABLE NOT UPDATEABLE
+    );
+
+CREATE OR REPLACE TABLE datasources_instant_log_20190719155839371 I18N rfc_restful (
+        date_as_text:text, 
+        database_name:text, 
+        type:text, 
+        name:text, 
+        active_requests:long, 
+        total_requests:long, 
+        pool_size_as_text:text, 
+        active_connections_as_text:text, 
+        idle_connections_as_text:text, 
+        ping_status:text, 
+        ping_execution_time_as_text:text, 
+        ping_duration_as_text:text, 
+        ping_down_cause:text, 
+        date:date, 
+        cw_search_start_date:date, 
+        cw_search_end_date:date
+    )
+    FOLDER = '/20190719155839371/datasources/intermediate_views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD datasources_instant_log_20190719155839371(
+        I18N rfc_restful
+        CONSTRAINTS (
+             ADD date_as_text NOS ZERO ()
+             ADD database_name NOS ZERO ()
+             ADD type NOS ZERO ()
+             ADD name NOS ZERO ()
+             ADD active_requests NOS ZERO ()
+             ADD total_requests NOS ZERO ()
+             ADD pool_size_as_text NOS ZERO ()
+             ADD active_connections_as_text NOS ZERO ()
+             ADD idle_connections_as_text NOS ZERO ()
+             ADD ping_status NOS ZERO ()
+             ADD ping_execution_time_as_text NOS ZERO ()
+             ADD ping_duration_as_text NOS ZERO ()
+             ADD ping_down_cause NOS ZERO ()
+             ADD date (any) OPT ANY
+             ADD cw_search_start_date (=) OBL ONE
+             ADD cw_search_end_date (any) OPT ANY
+        )
+        OUTPUTLIST (active_connections_as_text, active_requests, cw_search_end_date, cw_search_start_date, database_name, date, date_as_text, idle_connections_as_text, name, ping_down_cause, ping_duration_as_text, ping_execution_time_as_text, ping_status, pool_size_as_text, total_requests, type
+        )
+        WRAPPER (custom datasources_instant_log_20190719155839371)
+    );
+

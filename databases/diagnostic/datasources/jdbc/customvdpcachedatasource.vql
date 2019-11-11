@@ -1,0 +1,32 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JDBC customvdpcachedatasource
+    DRIVERCLASSNAME = 'org.apache.derby.jdbc.ClientDriver'
+    DATABASEURI = '${databases.diagnostic.datasources.jdbc.customvdpcachedatasource.DATABASEURI}'
+    USERNAME = '${databases.diagnostic.datasources.jdbc.customvdpcachedatasource.USERNAME}'
+    USERPASSWORD = '${databases.diagnostic.datasources.jdbc.customvdpcachedatasource.USERPASSWORD}' ${databases.diagnostic.datasources.jdbc.customvdpcachedatasource.USERPASSWORD.ENCRYPTED}
+    CLASSPATH = 'derby-10'
+    DATABASENAME = 'derby'
+    DATABASEVERSION = '10'
+    FETCHSIZE = 1000
+    VALIDATIONQUERY = 'values 1'
+    INITIALSIZE = 4
+    MAXIDLE = -1
+    MINIDLE = 0
+    MAXACTIVE = 20
+    EXHAUSTEDACTION = 1
+    TESTONBORROW = true
+    TESTONRETURN = false
+    TESTWHILEIDLE = false
+    TIMEBETWEENEVICTION = -1
+    NUMTESTPEREVICTION = 3
+    MINEVICTABLETIME = 1800000
+    POOLPREPAREDSTATEMENTS = false
+    MAXSLEEPINGPS = 4
+    INITIALCAPACITYPS = 8
+    DATA_LOAD_CONFIGURATION (
+        BATCHINSERTSIZE = 5000
+    )
+    SOURCECONFIGURATION (
+        delegatescalarfunctionslist = (abs, acos, asin, atan, atan2, ceil, cos, cot, current_date, degrees, div, exp, floor, getday, gethour, getminute, getmonth, getsecond, getyear, len, ln, log, lower, mod, mult, now, nullif, position, radians, round, sign, sin, sqrt, subtract, sum, tan, textconstant, to_date, trim, upper)
+    );
+

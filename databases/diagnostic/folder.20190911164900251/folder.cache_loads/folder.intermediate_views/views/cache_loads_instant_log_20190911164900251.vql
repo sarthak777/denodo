@@ -1,0 +1,129 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER CUSTOM cache_loads_instant_log_20190911164900251
+    FOLDER = '/20190911164900251/cache_loads/intermediate_views'
+    DATASOURCENAME=log_custom_wrapper
+    PARAMETERS (
+      'Date Pattern' = 'yyyy-MM-dd''T''HH:mm:ss.SSS',
+      'Date Extractor Pattern' = '.*?\\t(\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d).*',
+      'Log timezone' = 'GMT',
+      'Content Extractor Pattern' = '([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\t]*)\\t([\^\\r\\n]*)\\r?\\n?.*',
+      'Filepath' = ROUTE LOCAL 'LocalConnection' '${databases.diagnostic.folder.20190911164900251.folder.cache_loads.folder.intermediate_views.views.custom.cache_loads_instant_log_20190911164900251.Filepath.ROUTE.LOCAL.PATH}',
+      'Sequential Search Interval' = 1000,
+      'Rolling Implementation Class Name' = 'com.denodo.dashboard.connect.log.rollingpolicy.LexicographicRollingPolicy'
+    )
+    OUTPUTSCHEMA (
+        session_id = 'out0' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        server_name = 'out1' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        host = 'out2' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        port = 'out3' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        notification_type = 'out4' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        notification_timestamp_as_text = 'out5' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        id = 'out6' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        query_pattern_id = 'out7' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        database_name = 'out8' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        view_name = 'out9' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        sql_view_name = 'out10' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        projected_fields = 'out11' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        num_conditions = 'out12' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        vdp_condition_list = 'out13' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        cache_status = 'out14' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        ttl_status_in_cache = 'out15' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        ttl_in_cache = 'out16' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        query_pattern_state = 'out17' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        exception = 'out18' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        num_inserted_rows = 'out19' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        num_received_rows = 'out20' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        query_pattern_storage_start_time_as_text = 'out21' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        query_pattern_storage_end_time_as_text = 'out22' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        query_pattern_storage_duration_as_text = 'out23' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        cached_result_metadata_storage_start_time_as_text = 'out24' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        cached_result_metadata_storage_end_time_as_text = 'out25' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        cached_result_metadata_storage_duration_as_text = 'out26' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        data_storage_start_time_as_text = 'out27' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        data_storage_end_time_as_text = 'out28' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        data_storage_duration_as_text = 'out29' : 'java.lang.String' NOT SORTABLE NOT UPDATEABLE,
+        date = 'Extracted Date' : 'java.util.Date' (OPT) NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        cw_search_start_date = 'Search Start Date' : 'java.util.Date' (OBL) NOT NULL NOT SORTABLE NOT UPDATEABLE,
+        cw_search_end_date = 'Search End Date' : 'java.util.Date' (OPT) NOT SORTABLE NOT UPDATEABLE
+    );
+
+CREATE OR REPLACE TABLE cache_loads_instant_log_20190911164900251 I18N rfc_restful (
+        session_id:long, 
+        server_name:text, 
+        host:text, 
+        port:int, 
+        notification_type:text, 
+        notification_timestamp_as_text:text, 
+        id:long, 
+        query_pattern_id:long, 
+        database_name:text, 
+        view_name:text, 
+        sql_view_name:text, 
+        projected_fields:text, 
+        num_conditions:int, 
+        vdp_condition_list:text, 
+        cache_status:text, 
+        ttl_status_in_cache:text, 
+        ttl_in_cache:long, 
+        query_pattern_state:text, 
+        exception:text, 
+        num_inserted_rows:long, 
+        num_received_rows:long, 
+        query_pattern_storage_start_time_as_text:text, 
+        query_pattern_storage_end_time_as_text:text, 
+        query_pattern_storage_duration_as_text:text, 
+        cached_result_metadata_storage_start_time_as_text:text, 
+        cached_result_metadata_storage_end_time_as_text:text, 
+        cached_result_metadata_storage_duration_as_text:text, 
+        data_storage_start_time_as_text:text, 
+        data_storage_end_time_as_text:text, 
+        data_storage_duration_as_text:text, 
+        date:date, 
+        cw_search_start_date:date, 
+        cw_search_end_date:date
+    )
+    FOLDER = '/20190911164900251/cache_loads/intermediate_views'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD cache_loads_instant_log_20190911164900251(
+        I18N rfc_restful
+        CONSTRAINTS (
+             ADD session_id NOS ZERO ()
+             ADD server_name NOS ZERO ()
+             ADD host NOS ZERO ()
+             ADD port NOS ZERO ()
+             ADD notification_type NOS ZERO ()
+             ADD notification_timestamp_as_text NOS ZERO ()
+             ADD id NOS ZERO ()
+             ADD query_pattern_id NOS ZERO ()
+             ADD database_name NOS ZERO ()
+             ADD view_name NOS ZERO ()
+             ADD sql_view_name NOS ZERO ()
+             ADD projected_fields NOS ZERO ()
+             ADD num_conditions NOS ZERO ()
+             ADD vdp_condition_list NOS ZERO ()
+             ADD cache_status NOS ZERO ()
+             ADD ttl_status_in_cache NOS ZERO ()
+             ADD ttl_in_cache NOS ZERO ()
+             ADD query_pattern_state NOS ZERO ()
+             ADD exception NOS ZERO ()
+             ADD num_inserted_rows NOS ZERO ()
+             ADD num_received_rows NOS ZERO ()
+             ADD query_pattern_storage_start_time_as_text NOS ZERO ()
+             ADD query_pattern_storage_end_time_as_text NOS ZERO ()
+             ADD query_pattern_storage_duration_as_text NOS ZERO ()
+             ADD cached_result_metadata_storage_start_time_as_text NOS ZERO ()
+             ADD cached_result_metadata_storage_end_time_as_text NOS ZERO ()
+             ADD cached_result_metadata_storage_duration_as_text NOS ZERO ()
+             ADD data_storage_start_time_as_text NOS ZERO ()
+             ADD data_storage_end_time_as_text NOS ZERO ()
+             ADD data_storage_duration_as_text NOS ZERO ()
+             ADD date (any) OPT ANY
+             ADD cw_search_start_date (any) OBL ONE
+             ADD cw_search_end_date (any) OPT ANY
+        )
+        OUTPUTLIST (cache_status, cached_result_metadata_storage_duration_as_text, cached_result_metadata_storage_end_time_as_text, cached_result_metadata_storage_start_time_as_text, cw_search_end_date, cw_search_start_date, data_storage_duration_as_text, data_storage_end_time_as_text, data_storage_start_time_as_text, database_name, date, exception, host, id, notification_timestamp_as_text, notification_type, num_conditions, num_inserted_rows, num_received_rows, port, projected_fields, query_pattern_id, query_pattern_state, query_pattern_storage_duration_as_text, query_pattern_storage_end_time_as_text, query_pattern_storage_start_time_as_text, server_name, session_id, sql_view_name, ttl_in_cache, ttl_status_in_cache, vdp_condition_list, view_name
+        )
+        WRAPPER (custom cache_loads_instant_log_20190911164900251)
+    );
+

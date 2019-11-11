@@ -1,0 +1,8 @@
+﻿CREATE OR REPLACE VIEW cache_loads_log_20190719155839371 FOLDER = '/20190719155839371/cache_loads' AS SELECT session_id, notification_type, id, query_pattern_id, database_name, view_name, sql_view_name, projected_fields, num_conditions, vdp_condition_list, nullif(cache_status, 'UNKNOWN') AS cache_status, nullif(ttl_status_in_cache, 'UNKNOWN') AS ttl_status_in_cache, ttl_in_cache, nullif(query_pattern_state, 'UNKNOWN') AS query_pattern_state, nullif(exception, '-') AS exception, num_inserted_rows, num_received_rows, start_time, case WHEN (end_time is not null ) THEN end_time WHEN (start_time < to_date('yyyy-MM-dd''T''HH:mm:ss.SSS', '2019-06-21T13:16:23.856')) THEN to_date('yyyy-MM-dd''T''HH:mm:ss.SSS', '2019-06-21T13:16:23.855') WHEN (start_time between to_date('yyyy-MM-dd''T''HH:mm:ss.SSS', '2019-06-21T13:16:23.856') AND to_date('yyyy-MM-dd''T''HH:mm:ss.SSS', '2019-07-19T10:33:33.890')) THEN to_date('yyyy-MM-dd''T''HH:mm:ss.SSS', '2019-07-19T10:33:33.889') ELSE NULL END AS end_time, duration FROM cache_loads_interval_log_20190719155839371 CONTEXT ('I18N' = 'rfc_restful');
+
+ALTER VIEW cache_loads_log_20190719155839371
+ CACHE FULL
+     BATCHSIZEINCACHE DEFAULT TIMETOLIVEINCACHE NOEXPIRE
+    DECLARE CACHE INDEX cache_loads_20190719155839371_start_time_idx ON (start_time ASC)
+    DECLARE CACHE INDEX cache_loads_20190719155839371_end_time_idx ON (end_time ASC);
+
